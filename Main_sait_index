@@ -1,0 +1,1783 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="pl"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js " lang="pl"> <!--<![endif]-->
+
+<?php
+
+setcookie("liczniki","1", time()+15*60);
+// include 'kalk.php' ;
+?>
+
+<?php
+$okres=[0,19,18,14,5,2,2,2,2,3,6,11,16];
+$prognoza_r=$okres;
+$zl=[2.1,1000,0.75,1400,7.5];
+$zl_1=[3.2,1400,0.93,1500,7.5];
+$media_dane=['','GAZ','PRĄD','PV','WODA','WĘGIEL','PELLET','WEGIEL podajnik','PELLET podajnik'];
+// 0 GAZ / 1 WEGIEL / 2 PRĄD / 3 PELLET / 4 WODA
+session_start();
+
+ini_set( 'display_errors', 'Off' ); 
+date_default_timezone_set('Europe/Warsaw');
+
+
+////////////////////////////////////////////////   TH color =#AFEEEE
+	$koniec=0;
+////////########################################////////
+////////########################################////////
+////////############            ################////////
+////////############  S  Q   L  ################////////
+////////########################################////////
+
+	$mysql_server = "localhost";   
+    $mysql_admin = 	"u692052177_oko_nazwa";   // u692052177_oko
+    $mysql_pass = 	"SyryniaX1."; 		      // hasło     
+    $mysql_db =    	"u692052177_oko";   	// u692052177_oko_nazwa
+
+		$link = mysqli_connect($mysql_server, $mysql_admin, $mysql_pass , $mysql_db);  //
+		if (mysqli_connect_errno()) 
+			{
+		//	printf('Nie udało się połączyć: %s', mysqli_connect_error());
+			//exit();
+			} else {};
+		//	echo " Połączone OK ".$_SERVER['REMOTE_ADDR']."<br> \n";
+
+	if (!$link) {
+		die('Not connected : ' . mysql_error());
+		}		
+		
+////////////////////////////////////////////////////
+////////////////////
+////////////  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+function licz_funk($licz_opcja) 
+{	
+if($_COOKIE['liczniki']=="1") echo 'jest '; else  echo 'brak';
+	
+if($_COOKIE['liczniki']=="1")
+{
+$sql = "SELECT * FROM stat1 WHERE id=1 ";
+if($wynik=mysqli_query($link, $sql)){
+	while($row = mysqli_fetch_array($wynik)) {
+	$licz_in=$row['licznik'];
+	}
+	}
+}	
+else
+{
+	
+}
+}
+//return;
+?>
+<head>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7379042568440755"
+     crossorigin="anonymous"></script>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Site Meta -->
+	<title>Oszczędzaj na ogrzewaniu</title>
+    <meta name="gaz, ogrzewania,koszt ogrzewania domu, koszt gazu, drogie paliwo, węgiel, eko groszek, licznik gazu, zużycie gazu, zużycie opału, audyt energetyczny, 
+		kalkulator energetyczny,redukcja kosztow ogrzewania, zmniejsz rachunki" content="gaz, ogrzewania,koszt ogrzewania domu, koszt gazu, drogie paliwo, węgiel, eko groszek, licznik gazu, zużycie gazu, zużycie opału, audyt energetyczny, 
+		kalkulator energetyczny,redukcja kosztow ogrzewania, zmniejsz rachunki">
+    <meta name="description" content="oszczędzanie, gaz, węgiel, ekoroszek, ustawiania pieca, serwis pieca">
+    <meta name="okonato.pl" content="oszczędzanie, gaz, węgiel, ekoroszek, ustawiania pieca, serwis pieca">
+    
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/icon1.jpg" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+	<!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet"> 
+
+	<!-- Custom & Default Styles -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/carousel.css">
+    <link rel="stylesheet" href="style.css">
+
+	<!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+
+<style>
+#button2 {
+  display: inline-block;
+  background-color: #FF9800;
+  width: 70px;
+  height: 50px;
+  text-align: center;
+  border-radius: 4px;
+  margin: 30px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s;
+  z-index: 1000;1
+}
+#button2:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+#button2:active {
+  background-color: #555;
+}
+
+#button2::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
+}
+
+table {		
+	border-collapse: collapse;
+	color: black;
+	font-size: 14px;
+}
+
+#table1 {		
+	border-collapse: collapse;
+	color: black;
+	font-size: 11px;
+}
+
+td { 
+	 text-align: center;
+	 background-color:#00CED1;
+	 padding: 30 3 2 2;
+}
+
+th { 
+	 text-align: center;
+	 background-color:#87CEEB;
+	 padding: 15px;
+	 font-size: 20px;
+}
+input, select { 
+	font-size: 15px;
+	padding: 5px 5px;
+	background-color:#F0FFFF;
+}
+
+#t01 {
+	 text-align: right;
+	 padding: 10px 5px 5px 5px;
+	 border: 2px solid black;
+	 height:70;
+	 font-family: "Flaticon";
+}
+
+#t02 {
+  background-color: #778899;
+  border: 2px solid #4682B4;
+}
+#wynik_11 {
+	
+	visibility: hidden;
+}
+
+#wynik_21 {
+	
+	visibility: hidden;
+}
+
+#_stan1 {
+  font-weight:bold;
+}
+</style>
+
+
+<?php  ///////   LOGOWANIE ODCZYT PARAMNETRÓW
+	
+		
+if(isset($_GET['login'])){
+//echo 'Logowanie<br>';
+$osoba='';
+$sql="SELECT * FROM klient WHERE nazwa='".$_GET['login']."'";  // AND pass='".$_GET['pass']."'";
+	if($wynik=mysqli_query($link, $sql)){
+		while($row = mysqli_fetch_array($wynik))
+			{//	echo $row['kod']."<br/>";
+			if(	$row['kod']>0) $_SESSION['kod']=$row['kod'];
+			if(	$row['klucz']>0) $_SESSION['klucz']=$row['klucz'];
+			if(	$row['mac']>0) $_SESSION['opcja']=$row['mac'];
+			$koniec=intval( mysqli_num_rows($wynik));		
+			}
+		}
+	}
+
+if($koniec>0){
+	$_SESSION['user']=$_GET['login'];
+	$osoba=$_GET['login'];
+//	$_SESSION['kod']=$row['kod'];
+	
+	$_SESSION['wejscie']=1;
+	
+if (!empty($osoba))
+		{	 
+		$ip2="";   $ip3="";
+		$koniec=1;
+		$czas=date("Y-m-d H:i");
+		$sql="	UPDATE klient 
+				SET ost_log='".$czas."' , ip2='".$ip2."'  , ip3='".$ip3."'
+				WHERE klient.nazwa='".$_GET['login']."'";
+			if($wynik=mysqli_query($link, $sql))
+			{$koniec=1;
+			//	while($row = mysqli_fetch_array($wynik)){	}
+			}
+			{
+		$ad_ip=($_SERVER['REMOTE_ADDR']);
+		//echo '<br>'.'Wartość '.$_POST['but_'].'<br>';
+		$koniec=1;
+		$czas=date("Y-m-d H:i",time());
+		$sql = "INSERT INTO statystyka (licznik,data1,cz_log_1,mac1,opcja1) 
+			VALUES ('{$licz_in}','".time()."','".date('y-m-d H:i',time())."','{$ad_ip}','".$_POST['but_']."' ) ";  
+
+			if($wynik=mysqli_query($link, $sql))
+			{$koniec=1;
+			//	while($row = mysqli_fetch_array($wynik)){	}
+		}
+	}	
+		}			
+}
+/////////////////////////////////////////////
+////////////////////////////////////////////
+
+//if (!empty($_SESSION['user'])) 
+if (!empty($osoba)) 
+		{
+
+		$vis_log1= 'style="visibility:true;"';
+		$vis_log2= 'style="visibility:hidden;"';
+	//	echo ' <p>Witaj, '.$_SESSION['user'].'</p>';
+	//	$osoba=$_SESSION['user'];
+		} 
+	else  
+		{  // niezalogowany 
+		$vis_log1= 'style="visibility:hidden;"';
+		$vis_log2= 'style="visibility:true;"';
+		$osoba='';
+		}
+				
+?>
+
+<?php
+
+
+?>
+</head>
+<body class="left-menu">  
+    
+    <div class="menu-wrapper">
+        <div class="mobile-menu">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                       <a class="navbar-brand" href="#"><img src="images/biglogo.png" alt="Oszczędzaj na ogrzewaniu" width="50">
+					   Oszczędzaj na ogrzewaniu</a>
+					 
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+							<?php if(!empty($osoba)) echo '<li><a href="#odczyt_">Podaj zużycie </a></li>  '; ?>
+							<?php if($osoba=='raf123') echo '<li><a href="https://okonato.pl/odb4.php" >Odczyty czujników</a> </li> '; ?>	
+<?php if(empty($osoba)) echo'<li ><a href="#">	LOGOWANIE</a></li>';?>   					
+	<?php if(!empty($osoba)) echo'<li><a href="https://okonato.pl/wylog.php">	WYLOGUJ</a></li>';?>   
+								
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">KALKULATORY  <span class="fa fa-angle-down"></span></a>
+                                <ul class="dropdown-menu">
+									<li><a href="#kalk">  		Prognoza ksztów ogrzewania</a>		</li>
+									<li><a href="#moc" > 		Moc palnika - nastawy pieca</a> </li>
+									<li><a href="#czas_pod" > 	Czas podawania - nastawy pieca</a> </li>	
+									<li><a href="#podtrzymanie">Oszczędności - Tryb Podtrzymania</a> </li>										
+								</ul>
+				
+							<li><a href="#instrukcje"  > 		Instrukcje sterowników </a> </li>
+							<li><a href="https://okonato.pl/audyt.php<?php if(!empty($osoba)) echo '?login='.$osoba; ?>" 
+								target="Audyt pomocniczy - OkoNaTo.pl"> Krótki Audyt domu </a>		</li>
+							<li><a href="#kontakt"> <i class="check"> Kontakt</i></a></li>
+							<li><a href=https://www.facebook.com/okonatopl target="fb" ><i class="fa fa-facebook"> Polub nas na Facebook</i></a></li>
+							<li><a href="mailto:okonatopl@gmail.com"><i class="fa fa-paper-plane-o"> Napisz do Nas</i></a></li>  
+                        								
+                        </ul>
+                        
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </nav>
+        </div><!-- end mobile-menu -->
+
+        <header class="vertical-header">
+            <div class="vertical-header-wrapper">
+                <nav class="nav-menu">
+                    <div class="logo">
+						<a class="navbar-brand" href="#">
+						<center>
+						<img src="images/biglogo.png" alt="Oszczędzaj na ogrzewaniu" width="50"><br>Oszczędzaj na ogrzewaniu</a><br>
+						</center>
+                    </div><!-- end logo -->
+
+                    <div class="margin-block"></div>
+
+                    <ul class="primary-menu">	
+	<?php if(empty($osoba)) echo'<li class="child-menu"><a href="#">	LOGOWANIE</a></li>';?>   					
+	<?php if(!empty($osoba)) echo'<li class="child-menu"><a href="https://okonato.pl/wylog.php">	WYLOGUJ</a></li>';?>   
+	<?php if(!empty($osoba)) echo'<li class="child-menu"><a href="#odczyt_">	Podaj zużycie</a></li>';?>   
+                        <li class="child-menu"><a >KALKULATORY  <i class="fa fa-angle-right"></i></a>
+                            <div class="sub-menu-wrapper">
+                                <ul class="sub-menu center-content">
+                                    <li><a href="#kalk"> 		Prognoza ksztów ogrzewania </a></li>	
+									<li><a href="#moc" > 		Moc palnika - nastawy pieca</a> </li>
+									<li><a href="#czas_pod" > 	Czas podawania - nastawy pieca</a> </li>
+									<li><a href="#podtrzymanie">Oszczędności - Tryb Podtrzymania</a> </li>								
+								</ul>	
+		<?php if($osoba=='raf123') echo '<li class="child-menu"><a href="https://okonato.pl/odb4.php" target="Wykresy" >Odczyty czujników</a> </li>'; ?>
+		<li class="child-menu"><a href="#instrukcje"  > 	Instrukcje sterowników </a> </li>
+						<li class="child-menu"><a href="https://okonato.pl/audyt.php<?php if(!empty($osoba)) echo '?login='.$osoba; ?>" target="Krótki Audyt - OkoNaTo.pl"> Krótki Audyt </a></li>  
+										
+                    </ul>
+                 
+
+                    <div class="margin-block"></div>
+<div class="margin-block"></div>
+
+                    <div class="menu-social">
+                        <ul class="list-inline text-center">
+							<li><a href="#kontakt"><i class="fa fa-link"> Kontakt</i></a></li>
+							<li><a href="https://www.facebook.com/okonatopl"><i class="fa fa-facebook"> Polub nas na Facebook</i></a></li>
+							<li><a href="mailto:okonatopl@gmail.com"><i class="fa fa-paper-plane-o"> Napisz do Nas</i></a></li>  
+                        </ul>
+                    </div><!-- end menu -->   
+                </nav><!-- end nav-menu -->
+            </div><!-- end vertical-header-wrapper -->
+        </header><!-- end header -->
+    </div><!-- end menu-wrapper -->
+
+
+    <div id="wrapper">
+
+      <div id="home" class="video-section js-height-full">
+        <div class="overlay"></div>
+            <div class="home-text-wrapper relative container">
+                <div class="home-message">
+                    <img src="images/biglogo.png" alt="">
+                    <p>Włącz Oszczędzanie</p>
+					<b><br>Zacznij kontrolować koszty ogrzewania Zaloguj się  </b>
+                 <div class="btn-wrapper">
+                     <div class="text-center">
+					 <a id="log_"></a>
+<table align=center width=400><tr>
+<td style=" background-color: transparent; border: 3px solid rgba(47, 79, 79, 1);">						
+
+				<?php if((!empty($osoba))) echo '<br><a href="#odczyt_"	class="btn btn-default"  name="but_" value="4"> Podaj zużycie / Wyniki</a> <br> ' ?>
+				
+				<?php if((!empty($osoba)))	echo '<br><br><a href="https://okonato.pl/wylog.php" class="btn btn-primary" >WYLOGOWANIE</a><br> 	' ?>
+				
+				
+				<?php if(empty($osoba)) echo '<br>
+				<div class="form-1">
+									<form action="" method="GET"><center>
+                                        <input type="text" name="login" size=8 maxlength="10" style=" width:150px;" 
+										class="form-control" placeholder="Twój LOGIN"><br>
+                                        <button type="submit" class="btn btn-primary"  >LOGOWANIE  <i class="fa fa-paper-plane-o"></i></button>
+										
+									</form> 
+									<br>									
+                 </div>					 
+				';
+				//name="but_1" value="5"
+				// <input hidden name="but_" value="5">
+				
+				?>
+				<?php if((empty($osoba))) echo'<br><a href="https://okonato.pl/user_new.php" target="Nowy użytkownik" class="btn btn-default" > REJESTRACJA</a><br>'	?>
+				<a href="https://youtu.be/mUZqZXuLco8" target="instrukcja">Jak się zalogować i wpisywać dane? <br> <img src="images/Miniatura_2.jpg" width=60> INSTRUKCJA na YouToube</a>
+				<br>
+				</td></tr></table> <br>
+					
+		
+					</div>     
+                </div><!-- end row -->
+                </div>
+            </div>
+        </div>
+
+        <div class="section bgcolor noover">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tagline-message">
+						<br>
+                            <a href="#pomoc"><h3><mark class="rotate">Zmniejsz, Obniż, Redukuj</mark> koszty ogrzewania.</h3><br>
+							<h2>Kontroluj spalanie twojego kotła<br>wprowadzaj zmiany w ustawieniach pieca</h2>
+							</a>
+						
+							
+<?php
+/*
+<a href="#kalk" 	class="btn btn-primary" >Przybliżony koszt ogrzewania</a> <br><br>
+					<a href="#moc" 	class="btn btn-primary" >Licz nastawy pieca ekogroszek</a> <br><br>
+								<a href="https://okonato.pl/audyt.php<?php if(!empty($osoba)) 
+echo '?login='.$osoba; ?>" target=" Audyt  - OkoNaTo.pl"	class="btn btn-primary" >Krótki Audyt</a><br><br><br>				
+*/
+
+//licz_funk(0);
+	// 0 - glowny licznik
+	// 1 - koszt
+	// 2 - moc
+	// 3 - podaj zyzycie
+	// 4 - rejestr
+	
+	//echo 'START';
+//setcookie("liczniki","1", time()+200);
+
+//if(isset($_COOKIE['liczniki'])) echo '<br> ciastko='.$_COOKIE['liczniki'].'<br>';
+
+///////////////
+if($_COOKIE['liczniki']=="1"){
+
+
+}
+else
+{
+////////////////
+{
+$sql = "SELECT * FROM stat1 WHERE id=1 ";
+if($wynik=mysqli_query($link, $sql)){
+	while($row = mysqli_fetch_array($wynik)) {
+	$licz_in=$row['licznik'];
+	}
+
+	//echo '<br> Licznik '.intval($licz_in).'<br>';
+	//$licz_in=345;
+}
+
+$licz_in++;
+$sql = "UPDATE stat1 set LICZNIK =".intval($licz_in).", data1='".time()."', cz_log_1='". date('y-m-d H:i',time())."' WHERE id=1";  //.", cz_log_2=".$_SERVER['REMOTE_ADDR'];
+if($wynik=mysqli_query($link, $sql)){};
+	
+
+//***************************************************
+$koniec=0;
+$ad_ip=($_SERVER['REMOTE_ADDR']);
+$sql = "SELECT * FROM stat1 WHERE mac1='".$ad_ip."' AND id>1";
+//var_dump($sql);
+if($wynik=mysqli_query($link, $sql))
+	while($row = mysqli_fetch_array($wynik)) 
+	{
+		$licz_in=$row['licznik'];
+		$koniec=intval( mysqli_num_rows($wynik));
+		//$ip_jest=$ad_ip;
+		$id_jest=$row['id'];		
+	}
+	
+	if($koniec<1)
+		{ 
+		$ip_jest=0;  
+		//$sql = "INSERT INTO stat1 (licznik,data1,cz_log_1,mac1) VALUES ( 1,'".time()."','{date(y-m-d h:i,time())}','{$ad_ip}') ";  //time();  //.", cz_log_2=".$_SERVER['REMOTE_ADDR'];
+		$sql = "INSERT INTO stat1 (licznik,data1,cz_log_1,mac1) VALUES ( 1,'".time()."','".date('y-m-d H:i',time())."','{$ad_ip}') ";  //time();  //.", cz_log_2=".$_SERVER['REMOTE_ADDR'];
+	//	var_dump($sql);
+		if($wynik=mysqli_query($link, $sql)) {}			
+		}	
+	else 
+		{	
+	//	echo '<br> Trafione '.intval($koniec);
+		$licz_in++;
+		$sql = "UPDATE stat1 SET licznik=".round($licz_in).", data1='".time()."', cz_log_1='". date('y-m-d H:i',time())." ' WHERE id='".$id_jest."'";  //.", cz_log_2=".$_SERVER['REMOTE_ADDR'];
+		if($wynik=mysqli_query($link, $sql)) {}
+	//	echo '<br>Licznik '.round($licz_in).' ZAPISANY dla '.$id_jest.'<br>';
+		}
+	}	
+}
+
+$sql = "SELECT * FROM stat1 WHERE id=1";
+if($wynik=mysqli_query($link, $sql)){
+	while($row = mysqli_fetch_array($wynik)) {
+		$licz_in=$row['licznik'];
+		$koniec=intval( mysqli_num_rows($wynik));
+		$i++;
+	}
+}
+echo '<center>Licznik '.intval($licz_in);
+////////////////////////////////////////////////////
+
+if (isset($_POST['but_'] ))
+	{
+		$ad_ip=($_SERVER['REMOTE_ADDR']);
+	//	echo '<br>'.'Wartość '.$_POST['but_'].'<br>';
+		$koniec=1;
+		$czas=date("Y-m-d H:i",time());
+		$sql = "INSERT INTO statystyka (licznik,data1,cz_log_1,mac1,opcja1) 
+			VALUES ('{$licz_in}','".time()."','".date('y-m-d H:i',time())."','{$ad_ip}','".$_POST['but_']."' ) ";  
+			
+
+			if($wynik=mysqli_query($link, $sql))
+			{$koniec=1;
+			//	while($row = mysqli_fetch_array($wynik)){	}
+		}
+	}			
+
+?>
+                        </div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end section -->
+
+<?php
+if (!empty($osoba)) {
+  echo'<section class="section parallax" data-stellar-background-ratio="0.6" style="background-image:url("oko//images/upload/parallax_01.jpg");">';
+	echo'
+      
+            <div class="container"  >
+                <div class="section-title light-color text-center"  >
+				<a id="odczyt_"> </a>
+                    
+               <center>     		
+';
+
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&	
+//if (!empty($_SESSION['user'])) 	
+{
+	
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&	
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+$li_show=1;
+$okr=1;
+
+if(!isset($_POST['licz_show'])) $li_show=$_SESSION['klucz'];
+if(isset($_POST['licz_show'])) 	$li_show=$_POST['licz_show'];
+//if(isset($_POST['licz_show'])) 	$li_show=$_GET['licz_show'];
+if(isset($_POST['okres'])) 		$okr=$_POST['okres'] ;
+if(isset($_POST['ilosc'])) 		$ile=$_POST['ilosc'] ; else $ile=20;
+if(isset($_POST['licznik'])) 	$li_show=$_POST['licznik']; 
+if(isset($_POST['licz1'])) 		$li_show=$_POST['licz1'];
+//echo '<br> Licznik nr ='.$_POST['licz_show'].'='.$li_show.'=<br>';
+//echo 'nazwa: '.$_SESSION['user'].'<br>';
+//echo 'klucz: '.$_SESSION['klucz'].'<br>';
+//echo 'li_show: '.$li_show.'<br>';
+echo '<br> <table cellpadding=15><tr><td><br> ';
+echo '
+<form action="#odczyt_" method="POST"><center>
+
+<table id="t02">
+<tr><th colspan=6 > użytkownik ['.$osoba.'] <br>Podaj dane  </th></tr>
+
+<tr><td> Dzień </td><td> M-c </td><td> Rok </td><td> Godz </td>
+<tr>
+<td> <input type="number" max="31"  style="width: 	4em" 	min="1" 			name="dzien1" value="'.intval(date(d)).'"/></td>
+<td> <input type="number" width="6" style="width:	4em"  	min="1" max="12" 	name="mc1" value="'.date(m).'" />  </td>
+<td> <input type="number" size="1"  style="width: 	5em"   	min="1" max="2040" 	name="rok1" value="'.date(Y).'" />  </td>
+<td> <input type="number" size="1"  style="width: 	4em"  	min="1" max="24" 	name="g1" value="'.date(H).'" /> 
+<input type="hidden" size="3" 		size="3"  maxlength="6" 					name="czas1" value="24" /> </td>
+</tr>
+</table>
+<br>
+<table id="t02" width="300"> <tr>
+<td> <b>Nośnik </b></td><td> <b>Stan/ilość </b></td></tr>
+
+<td> <select name="licz1"  size="1" id="_stan1">  
+<option ';	if($li_show==1) echo'selected '; echo'value=1>GAZ </option>
+<option ';	if($li_show==2) echo'selected '; echo'value=2>PRĄD  </option>';
+/*
+<option ';
+if($li_show==3) echo'selected '; echo'value=3>PV </option>
+<option ';
+if($li_show==4) echo'selected '; echo'value=4>WODA  </option>
+*/
+ echo'
+<option ';	if($li_show==5) echo'selected '; echo'value=5>WĘGIEL  </option>
+<option ';	if($li_show==6) echo'selected '; echo'value=6>PELLET  </option>
+<option ';	if($li_show==7) echo'selected '; echo'value=7>PODAJNIK WEGIEL</option>
+<option '; 	if($li_show==8) echo'selected '; echo'value=8>PODAJNIK PELLET</option>
+	</select>
+	</td>
+	<td><input type="number"  name="stan1" min="1" style="width: 100px"  value="" alt="Stan licznika" id="_stan1" />  </td>
+
+</tr>	
+</table>
+<br>
+ 
+<button type="submit" name="but_" value="3">DODAJ</button>
+
+<br>
+</form> 
+</td></tr></table>' ;		
+////////  <a href="#odczyt_"  class="btn1" >	
+///  **********************************************************///  **********************************************************
+///  **********************************************************/// </th></tr> **********************************************************
+
+//echo '<span id=wynik_1 style="visibility:true;">';   ####
+
+//echo '<br> lishow'.$li_show;
+echo '<table width=300><tr>';
+echo '<th>Tabela wyników';
+echo'<br>
+
+<form action="#odczyt_" method="POST" ><center>
+Licznik 
+<select name="licz_show" size="1" id="_stan1" onchange="this.form.submit()">  
+<option ';	if($li_show==1) echo'selected '; echo'value=1>GAZ </option>
+<option ';	if($li_show==2) echo'selected '; echo'value=2>PRĄD  </option> 
+<option ';	if($li_show==5) echo'selected '; echo'value=5>WĘGIEL  </option>
+<option '; 	if($li_show==6) echo'selected '; echo'value=6>PELLET  </option>
+<option '; 	if($li_show==7) echo'selected '; echo'value=7>PODAJNIK WEGIEL</option>
+<option '; 	if($li_show==8) echo'selected '; echo'value=8>PODAJNIK PELLET</option>
+</select>
+</th></tr>
+';
+
+/////////////////////////   STAWKA OPŁATY
+
+
+ switch ($li_show) {
+		case 1:  // gaz
+			$stawka=$zl[0]; // $opcja=$nazwy[$i];
+			$jedn='m<sup>3</sup>';
+			break;
+		case 2:  // prąd
+			$stawka=$zl[2]; // $opcja=$nazwy[$i];
+			$jedn='kWh'; 
+			break;
+		case 3:  // POMPA CIEPŁA
+			$stawka=$zl[2]; // $opcja=$nazwy[$i];
+			$jedn='kWh'; 
+			break;			
+		case 4: // woda
+			$stawka=$zl[4]; // $opcja=$nazwy[$i]; 
+			$jedn='m<sup>3</sup>';
+			break;
+		case 5: // węgiel
+			$stawka=$zl[1]/1000; // $opcja=$nazwy[$i]; 
+			$jedn='kg';
+			break;			
+		case 6: // PELLET
+			$stawka=$zl[3]/1000; // $opcja=$nazwy[$i]; 
+			$jedn='kg';
+			break;	
+		case 7: // PODAJNIK Węgiel czas pracy minuty
+			$stawka=$zl[1]/1000; // $opcja=$nazwy[$i]; 
+			$jedn='kg';
+			break;	
+		case 8: // PODAJNIK PELLET czas pracy minuty
+			$stawka=$zl[3]/1000; // $opcja=$nazwy[$i]; 
+			$jedn='kg';
+			break;	
+			
+		default :
+			$stawka=0;
+		}
+
+echo'<tr><td><br><b> Cena jednostkowa to:'.number_format($stawka,2).'zł / '.$jedn.'</b><br> </td></tr>';
+//<form action="licz.php" method="POST" ><center>
+echo'<br>
+
+<tr><td>
+
+Uśrednij za 
+<select name="okres" size="1" onchange="this.form.submit()">  
+<option value=1>1</option>
+<option ';	if($okr==3) echo'selected '; echo'value=3>3  </option>
+<option ';	if($okr==5) echo'selected '; echo'value=5>5  </option>
+<option ';	if($okr==10) echo'selected '; echo'value=10>10  </option>
+<option ';	if($okr==29) echo'selected '; echo'value=29>30  </option>
+</select> 
+odczyty<br>';
+
+echo'<br>
+<tr><td>
+Ilość do wyświetlenia 
+<select name="ilosc" size="1" onchange="this.form.submit()">  
+<option value=0>Wszystkie</option>
+<option ';	if($ile==10) echo'selected '; echo'value=10>10  </option>
+<option ';	if($ile==20) echo'selected '; echo'value=20>20  </option>
+<option ';	if($ile==30) echo'selected '; echo'value=30>30  </option>
+<option ';	if($ile==50) echo'selected '; echo'value=50>50  </option>
+<option ';	if($ile==100) echo'selected '; echo'value=100>100  </option>
+<option ';	if($ile==500) echo'selected '; echo'value=500>500  </option>
+</select> 
+<br>
+</form>
+
+
+</td></tr></table>';
+if(isset($_POST['dat2'])) 	if(isset($_POST['dat1'])) 	{
+	echo $_POST['dat1'].'<br>',$_POST['dat2'].'<br>';
+}
+//echo '</span>'; ######
+//  <input type="submit" value="Pokaż"/>	
+
+
+////#####################################////#####################################	
+////#####################################		
+/////   U S U N    P O Z Y C J Ę  ///// 
+
+if(isset($_POST['del1'])) { 
+
+//echo $osoba.'++++  '.$_POST['poz1'].' & ';
+$sql="DELETE FROM energia2 WHERE id='".$_POST['poz1']."' AND osoba='".$osoba."'";  
+if($wynik=mysqli_query($link, $sql)) 
+	//while($row = mysqli_fetch_array($wynik)) //, MYSQLI_ASSOC))	 //mysqli_fetch_array($wynik,MYSQLI_ASSOC))   BOTH
+		{				
+		$row = mysqli_fetch_array($wynik);
+		//echo $row['id'].'<<Usunięto>>'.$_POST['poz1'];
+		}
+}
+	
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&			
+/// ******************************************** koniec usuń
+/// ********************************************
+
+	
+if(isset($_POST['stan1'])) {       ////// ZAKRE DZIŚ
+	$g1=$_POST['g1'];	$d1=$_POST['dzien1'];	$mc1=$_POST['mc1'];	$rok1=$_POST['rok1'];  
+	$stan1=$_POST['stan1'];	$stawka1=$_POST['stawka1'];  $licznik=$_POST['licz1'];  $czas1=$_POST['czas1'];
+	$sr_d=round(($stan1*1000)/$czas1,0);
+//echo	' srednia '.intval($sr_d);
+////// 88888888888888888888888888888888888
+
+
+$sql="SELECT * FROM energia2 ORDER BY nr DESC Limit 1"; // WHERE  nr<10";  //t12<>'NULL'";    /// czy istnieje   PRAWIDLOWE  !!!!!
+								
+if($wynik=mysqli_query($link, $sql)){
+	$a=intval( mysqli_num_rows($wynik));
+	while($row = mysqli_fetch_array($wynik)) {
+		}}
+		
+//// 8888888888888888888888888888888888
+
+
+$g1=$_POST['g1'];	$d1=$_POST['dzien1'];	$mc1=$_POST['mc1'];	$rok1=$_POST['rok1'];  $stan1=$_POST['stan1'];	$stawka1=$_POST['stawka1'];
+$li=$_POST['licznik']; 
+//$daty1=$d1.'-'.$m1.'-'.date("Y");    //mktime($g1,0,0,$mc1,$d1, date("y"));	
+
+
+$daty1=mktime($g1,0,0,$mc1,$d1, $rok1);
+$dat=$rok1.'-'.$mc1.'-'.$d1.' '.$g1.':00:00';
+/*  $zakres1=$_POST['zakres1'];		$zakres2=$_POST['zakres2'];		$arch1=$_POST['arch1'];  */
+	
+//$stawka=$zl_1[$li_show];
+$stawka1=$stawka*100;	
+
+$sql =	"INSERT INTO energia2(daty,godz,wart1,stawka1,godz1,dzien1,mc1,rok1,sr_dzien1,czas,licznik, osoba)
+			VALUES ('{$daty1}','{$dat}','{$stan1}','{$stawka1}','{$g1}','{$d1}','{$mc1}','{$rok1}','{$sr_d}','{$czas1}','{$licznik}','{$osoba}')";
+			
+//			if (mysqli_query($link, $sql)===true) 
+				
+		if(mysqli_query($link, $sql))
+				{
+		   echo 'Dodana pozycja';	  
+				}
+				else {
+				echo $dat."Error NIE DODANE : " . mysqli_error($link).'<br>';}					
+////#####################################		
+}
+//==================================
+//======== odczyt T ZEW ============
+
+$sql="SELECT *,AVG(czujnik0) as cz0,AVG(czujnik1)as cz1,AVG(czujnik2)as cz2,AVG(czujnik3)as cz3,MAX(czujnik1)as cz4,DATE(czas) as dat0
+		FROM odb101 WHERE czujnik1!='' GROUP BY YEAR(czas), MONTH(czas), DAY(czas) 
+		ORDER BY YEAR(czas) DESC, MONTH(czas) DESC,  DAY(czas) DESC LIMIT 500 ";
+		//$tzew[]=
+	
+	if($wynik=mysqli_query($link, $sql))
+	{
+		$i=0;
+		//	 echo '<td>=='.$i.'='.$opis[$i].'=<br><br>';
+			
+				
+		while($row = mysqli_fetch_array($wynik))
+		{
+			//$tzew[$j][0]=date("y-m-d",strtotime($row['czas']));
+		//	$tzew[$j][0]=strtotime($row['czas']);
+		//$j=$row['dat0'];
+		$j=strtotime(date('y-m-d 0:0',strtotime($row['dat0'])));
+			$tzew[$j][0]=date('y-m-d H:i',strtotime($row['dat0'])).'='.$j;
+			$tzew[$j][1]=round($row['cz0'],1);
+			$tzew[$j][2]=round($row['cz1'],1);
+			$tzew[$j][3]=round($row['cz2'],1);
+			$tzew[$j][4]=round($row['cz3'],1);
+			$tzew[$j][5]=round($row['cz4'],1);			
+		//	echo '<br>';
+		//	for($x=0;$x<=5;$x++){echo $tzew[$j][$x].' <> ';}
+			
+			$i++;
+		}
+	}
+
+//===================================
+//$sql="SELECT * FROM energia1 ORDER BY mc1, dzien1,  "; // WHERE  nr<10";  //t12<>'NULL'";    /// czy istnieje   PRAWIDLOWE  !!!!!
+
+// $sql="SELECT * FROM energia2 WHERE licznik='{$li_show}' and osoba='{$osoba}' ORDER BY daty  DESC "; JEST OK
+
+$sql="SELECT * FROM energia2 WHERE licznik='{$li_show}' and osoba='{$osoba}' ORDER BY daty  DESC "; 
+$wid='10em';
+$wid=[20,35,60,70,110,130];
+if ($ile==0) $ile=1000;
+
+//$prognoza_r=[0,20,17,16,8,1,1,1,1,3,7,12,17];
+$prognoza_r=$okres;
+////#####################################////#####################################
+////#####################################////##################################### Pieniądze 
+////#####################################////#####################################
+
+echo '<a id="usun_"></a>';
+
+		if($wynik=mysqli_query($link, $sql)){
+			
+			$a=intval( mysqli_num_rows($wynik));		
+		
+			//echo "<br> Ilość pozycji  w BD to:".$a;
+			echo '<br>
+			<table id="table1" border=1px CELLSPACING=3>
+			<th colspan=7>Tabela Koszty - '.$media_dane[$li_show].'</th>
+			<tr>
+			<td width='.$wid[1].'px> Nr  </td>
+			<td width='.$wid[1].'px>Lp</td>	
+			<td width='.$wid[4].'px>Data odczyt</td>	
+			<td width='.$wid[3].'px>Śred dzień<br> [zł]</td>		
+			<td width='.$wid[4].'px>Na m-c <br>[zł]</td>  
+			<td width='.$wid[5].'px>Na ROK<br> [zł]</td> 
+			<td width='.$wid[3].'px>T zew 	[<sup>0</sup>C]</td></tr>';
+			$i=0;$j=0;$x=0; // **************
+			
+			
+			while($row = mysqli_fetch_array($wynik)) //, MYSQLI_ASSOC))	 //mysqli_fetch_array($wynik,MYSQLI_ASSOC))   BOTH
+			
+			{
+			$x++;
+			if($x % $okr==0)
+			{$i++;
+			
+				
+				$data1		=$row['dzien1'].'.'.$row['mc1'].'.'.$row['rok1'];
+				$dat1[$i]	=mktime($row['godz1'],0,0,$row['mc1'],$row['dzien1'],$row['rok1']);
+				$wart[$i]	=$row['wart1'];
+				if($row['godz']>0) 
+					$dat[$i]=$row['godz'];
+				else
+					$dat[$i]=strtotime($data1);						
+					
+				$d[$i]		=($dat1[$i-1]-$dat1[$i])/3600;
+				$roznica1	=($wart[$i-1]-$row['wart1']);
+				$sr_d		=($wart[$i-1]-$row['wart1'])/$d[$i]*24;
+
+/////////////////////////   STAWKA OPŁATY
+$wydajnosc_m_kg=0.25;
+ switch ($li_show) {
+		case 5:
+			$sr_d		=($wart[$i-1])/$d[$i]*24;
+			$roznica1	=($wart[$i-1]);
+			break;
+		case 6:
+			$sr_d		=($wart[$i-1])/$d[$i]*24;
+			$roznica1	=($wart[$i-1]);
+			break;
+		case 7:
+			$sr_d		=$sr_d*$wydajnosc_m_kg;
+			$roznica1	=($wart[$i-1]);
+			break;
+		case 8:
+			$sr_d		=$sr_d*$wydajnosc_m_kg;
+			$roznica1	=($wart[$i-1]);
+			break;
+		}
+
+//var_dump ('<br>'.$li_show.'//'.$sr_d.'<br>');
+/////////////////////////  /////////////////////////  			
+				$sr_m=$sr_d*30;
+				if ($li_show==4) $prognoza_r1=1/12; else $prognoza_r1=$okres[round(date('m',$dat1[$i]),0)]/100;
+			//	var_dump ('<br>'.$li_show.'// '.$prognoza_r1.'<br>');
+				////$row['lp']
+		if ($i>0)	
+			if ($j<$ile)
+			{
+			$j++;	
+			$daa=strtotime(date('y-m-d 0:0',$dat1[$i]));
+			echo '<tr>	<td>'.$j.' </td><td>'.$row['id'].' </td>
+					<td>'.(date('y-m-d',$dat1[$i])).'</td>
+					<td>'.(round($sr_d*$stawka,0)).' zł </td>
+					<td>'.(round($sr_m*$stawka,0)).' zł  </td>
+					<td>'.(round($sr_m*$stawka/$prognoza_r1/100,0)*100).' zł  </td>
+					<td>'.(round($tzew[$daa][2],1)).' </td>
+</tr>';
+					
+				
+				$ostatni=$row;
+				//echo  'ostatni='.$row[12].'<br>';
+				}				
+				}
+			}
+		echo '</td></tr></table>';		
+		}	
+////#####################################////#####################################
+////#####################################////##################################### ILOŚCI 
+////#####################################////##################################### 	<td width='.$wid[3].'px>Ile/h 	['.$jedn.']</td>	
+	$dane_1='';
+	$dane_2='';
+	$legenda='';
+$opis_x1='';
+$opis_x='';	
+	$min=0;
+	$max=0;
+		if($wynik=mysqli_query($link, $sql)){
+			
+			$a=intval( mysqli_num_rows($wynik));		
+			//echo "<br> Ilość pozycji  w BD to:".$a;
+			echo '<br>
+			<table id="table1" border=1px CELLSPACING=3>
+			<th colspan=10>Tabela Ilości - '.$media_dane[$li_show].'</th>
+			<tr>
+			<td width='.$wid[1].'px> Nr  </td>
+			<td width='.$wid[1].'px>Lp</td>	
+			<td width='.$wid[4].'px>Data odczyt</td>	
+			<td width='.$wid[3].'px>Godz</td>	
+			<td width='.$wid[3].'px>Stan licznika ['.$jedn.']</td> 
+		
+			<td width='.$wid[3].'px>Śred dzień 	['.$jedn.']</td>	
+			<td width='.$wid[3].'px>Na m-c<br> 	['.$jedn.']</td>	
+			<td width='.$wid[3].'px>Na ROK<br> 	['.$jedn.']</td> 
+			<td width='.$wid[3].'px>T zew 	[<sup>0</sup>C]</td></tr>';
+			
+			$i=0;$j=0;$x=0; // **************
+			
+			while($row = mysqli_fetch_array($wynik)) //, MYSQLI_ASSOC))	 //mysqli_fetch_array($wynik,MYSQLI_ASSOC))   BOTH
+			{
+			$x++;
+			if($x % $okr==0)
+			{
+				$i++;
+			
+				$data1		=$row['dzien1'].'.'.$row['mc1'].'.'.$row['rok1'];
+				$dat1[$i]	=mktime($row['godz1'],0,0,$row['mc1'],$row['dzien1'],$row['rok1']);
+				$wart[$i]	=$row['wart1'];
+				if($row['godz']>0) 
+					$dat[$i]=$row['godz'];
+				else
+					$dat[$i]=strtotime($data1);						
+					
+				$d[$i]		=($dat1[$i-1]-$dat1[$i])/3600;
+				$roznica1	=($wart[$i-1]-$row['wart1']);
+				$sr_d		=($wart[$i-1]-$row['wart1'])/$d[$i]*24;
+/////////////////////////   STAWKA OPŁATY
+$wydajnosc_m_kg=0.25;
+ switch ($li_show) {
+		case 5:
+			$sr_d		=($wart[$i-1])/$d[$i]*24;
+			$roznica1	=($wart[$i-1]);
+			break;
+		case 6:
+			$sr_d		=($wart[$i-1])/$d[$i]*24;
+			$roznica1	=($wart[$i-1]);
+			break;
+		case 7:
+			$sr_d		=$sr_d*$wydajnosc_m_kg;
+			$roznica1	=($wart[$i-1]);
+			break;
+		case 8:
+			$sr_d		=$sr_d*$wydajnosc_m_kg;
+			$roznica1	=($wart[$i-1]);
+			break;
+		}
+
+//var_dump ('<br>'.$li_show.'//'.$sr_d.'<br>');
+/////////////////////////  /////////////////////////  			
+				$sr_m=$sr_d*30;
+				if ($li_show==4) $prognoza_r1=1/12; else $prognoza_r1=$okres[round(date('m',$dat1[$i]),0)]/100;
+			//	var_dump ('<br>'.$li_show.'// '.$prognoza_r1.'<br>');
+				////$row['lp']
+				
+/////////////////////////   STAWKA OPŁATY
+/////////////////////////  /////////////////////////  		 (date('H:i',$dat1[$i]))
+				////$row['lp']
+
+		if ($i>0)		
+			if ($j<$ile)
+			{
+			$j++;	
+			$daa=strtotime(date('y-m-d 0:0',$dat1[$i]));
+			echo '	<td>'.$j.' </td><td>'.$row['id'].' </td>
+					<td>'.(date('y-m-d',$dat1[$i])).'</td>					
+					<td>'.date('H:i',$dat1[$i]).'</td>
+					<td>'.$row['wart1'].'</td>';
+				//	<td> '.round($sr_d/24,1).'</td>
+			echo	'	<td> '.round($sr_d,1).'</td>
+					<td> '.round($sr_m,0).'</td>
+					<td> '.(round($sr_m/$prognoza_r1/100,0)*100).'</td>
+					<td>'.(round($tzew[$daa][2],1)).' </td>
+					</tr>';
+					
+				$ostatni=$row;
+				
+				$wykr1[$j][1]=	date('y-m-d',$dat1[$i]);
+				
+				if($j % ($ile/10)==0){	$opis_x=date('m-d',$dat1[$i]).'|'.$opis_x;}
+				if($j % ($ile/3)==0){	$opis_x1=date('Y',$dat1[$i]).'|'.$opis_x1;}
+				
+				if ($max<$sr_d*10) $max = round($sr_d*10,0);
+				if ($max<$tzew[$daa][2]) $max = round($tzew[$daa][2],0);
+				
+				if ($min>$sr_d) $min = $sr_d;
+				if ($min>$tzew[$daa][2]) $min = $tzew[$daa][2];
+				
+				$dane_1=round($sr_d*1+10,0).','.$dane_1;
+				$dane_2=round($tzew[$daa][2]+10).','.$dane_2;
+			//	$wykr1[$j][1]=$sr_d;
+			//	$wykr1[$j][2]=$tzew[$daa][2];
+				
+				}	
+			}	
+			}
+		echo '</td></tr></table>';		
+		}	
+		
+////////////////////////////////////////////		
+/////////////////////////////  U S U Ń		
+
+// onchange="this.form.submit()" onchange="location.reload()"
+echo 	'<br><br>
+
+		<form action="#usun_" method="POST"><center>	
+	
+		Usunąć wiersz [Lp]= 				
+		<input type="number"  style="width: 70px;"  maxlength=4 name="poz1" max="9999" value="" />
+		<button type="submit" name="but_" value="6"   class="btn1"> Usuń</button>
+	
+		<input type="hidden" name="del1" value="6" />
+		</form>';
+
+
+
+//---------------------- WYKRES
+
+$min=-10;
+$max=120;
+//$max=
+$koniec=$j;
+
+echo "<br><br> Ilość ".$j." pozycji w na wykresie <br> \n";  // !!!!!!!!!!!!!!!!!!!!!!!!!
+//echo 		implode('<br> ',$opis);
+//$legenda= 	implode('|',$opis);
+//$opis_x=	implode('|',$daty_1);
+
+
+$legenda='Średnie dobowe*5|Temp zew stC';
+//if (substr($dane_1,-1)==",") 
+	$dane_1= substr($dane_1,0,strlen($dane_1)-1);
+	$dane_2=substr($dane_2,0, strlen($dane_2) -1);
+	
+	$opis_x=substr($opis_x,0, strlen($opis_x) -1);
+	$opis_x1=substr($opis_x1,0, strlen($opis_x1) -1);
+//$opis_x=$opis_x.' 2:'.$opis_x1;
+
+//if (substr($dane_2,-1)==",") 
+$dane_1=$dane_1.'|'.$dane_2;
+//echo '<br> '.$legenda;
+//echo '<br>++++ '.$dane_1.'++++<br>';
+	$zrodloobrazka1="http://chart.apis.google.com/chart?cht=lc&chs=900x300&chdl=$legenda&chdlp=2&chg=2,10,10,2&
+		chco=d9351c,a0009f,faac02,79d81c,2a9df0,000000&chd=t:".
+		$dane_1."&chxt=x,y,x&chxl=0:|".$opis_x."&chxr=1,$min,$max,5";
+	
+	 echo '<br><a href="'.$zrodloobrazka1.'" target="wykres"><img src="'.$zrodloobrazka1.'" width="99%" alt="Wykres" /></a><br></p>';
+
+//////////////*****************************//////////////////////////////////////////
+//////////////*****************************//////////////////////////////////////////
+//////////////*****************************//////////////////////////////////////////
+}
+
+echo '
+                </div><!-- end title -->
+            
+            </div><!-- end container -->
+        ';
+echo '</section>';
+}
+?>
+<!-- end container -->
+
+ <section class="section lb">
+            <div class="container">
+                <div class="row">
+				<a id="kalk">	</a>
+				<center>
+                    <h3><br>
+					<table ><tr><td>
+					 <img src="images/Wykres_zapotrz.png" width=90%>
+					 	<?php
+						//	koszt_rok($okres,$zl);    KOSZT
+							?>
+					 </tr><td></table>
+<font style="   font-size:small font-weight: small; color=black;    font-style: normal; font-family: Flaticon;" >		
+<?php 
+//<span id="wynik" <?php if(!isset($_POST['pow'])) echo 'style="visibility:hidden;" '; 
+/// style=" background-color:#98FB98;"
+
+
+if(isset($_POST['opal'])) $stawka=$zl[$_POST['opal']]; else $stawka=$zl[0];
+if ($_POST['opal']>2) $cena_1=$cena_1*1000;
+
+?>
+<center>
+
+		<table cellpadding=5 bgcolor="#1E90FF" >
+			<tr><th  bgcolor="#1E90FF" colspan="2">	<h2>	<b>Wylicz przybliżone koszty ogrzewania</b>	</h2></th></tr>
+			<tr><td>		
+			<center>	
+			<form action="#kalk" method="post"> 
+			<table >
+
+		<tr id="t01"><td id="t01">	Powierzchnia ogrzewana:	</td><td>	<input type="number" name="pow" value=<?php echo $_POST['pow'] ?> min=0 max="5000"  size=8 maxlength="4" style=" width:90px; text-align: center;"/><br/></td></tr>
+		<tr id="t01"><td id="t01"  style="width:220px">	Ocieplenie domu (grubość):	</td><td  style="width:120px">	
+		<br><table>
+			<?php 
+			
+			$kod_2='<tr><td style=" margin-left: 20px; margin-top: 10px; text-align: left;"><label  style=" margin-left: 10px;">
+					<input type="radio" name="ociep" ';
+			
+			$wstaw1=[' value=0> do5cm',' value=1>5cm do 10cm',' value=2>od 10cm'];		
+			
+			$kod_3='</label></td></tr>';
+			
+			for($i=0;$i<3;$i++){
+				
+				echo $kod_2;				
+				//switch (intval($_POST['ociep'])) {
+				if($i==$_POST['ociep']) echo 'checked   ';
+				/*
+				switch (intval(1)) {
+					case 0: echo 'checked   ';break;
+					case 1: echo 'checked   ';break; 
+					case 2: echo 'acheckedx  ';break;
+				}
+				*/
+				echo $wstaw1[$i].$kod_3."\n";
+			}
+		?>		
+			</table>
+		<br/></td></tr>
+		<tr id="t01"><td id="t01">	Ilość opału na dobę [kg/m<sup>3</sup>/kWh]:	</td><td>	<input type="number" name="ile" step="0.01" value=<?php echo $_POST['ile'] ?> min=0 max="5000"  size=8 maxlength="4" style=" width:90px; text-align: center;"/><br/></td></tr>	
+		<tr id="t01"><td id="t01">	Cena jednostkowa [zł/ton/m<sup>3</sup>/kWh]:</td><td>	
+			<input type="number" name="cena" step="0.01" value="<?php echo $stawka ?>" min=0 max="5000"  size=8 maxlength="5" style=" width:90px; text-align: center;"/><br/></td></tr>	
+		<tr id="t01"><td id="t01">	Twój opał:</td><td>			
+	
+		<select name="opal" size="1"  style=" width:110px; text-align: center;"  onchange="this.form.submit()">  
+		<?php 
+						
+		echo '<option ';
+		if($_POST['opal']==0) echo 'selected '; echo' value=0>GAZ 	</option>';
+		echo '<option ';
+		if($_POST['opal']==1) echo 'selected '; echo' value=1>WĘGIEL  </option>';
+		echo '<option ';
+		if($_POST['opal']==2) echo 'selected '; echo'value=2>PRĄD  	</option>';
+		echo '<option ';
+		if($_POST['opal']==3) echo 'selected '; echo'value=3>PELLET  </option> ';		
+		
+		?>
+		</select>
+		</td></tr>			
+		<tr><td colspan="2" align=center>	<br>
+		<button type="submit" name="but_" value="1"> 
+		<a  class="btn1" ><span><b>OBLICZ</b> </span><em></em></a> </button><br><br><br>
+
+		
+		</td></tr>
+		</form>	
+	</table>
+		
+
+<?php 
+// 		<a  class="btn1" ><span><b>OBLICZ</b></span> <em></em></a> </button>
+//<span id="wynik" <?php if(!isset($_POST['pow'])) echo 'style="visibility:hidden;" '; 
+/// style=" background-color:#98FB98;"
+$stawka=$zl	[$_POST['opal']];
+$stawka_1=$zl_1[$_POST['opal']];
+
+$wsp=$prognoza_r[intval(date(m))];
+
+if($_POST['cena']>0) {$stawka=$_POST['cena']; }
+
+if(isset($_POST['ociep'])) { 
+	$ocie=$_POST['ociep'];	
+	}
+
+$wsp=$wsp/100;
+$wsp_ile=$wsp;
+
+$wsp_ile=1;
+if($_POST['opal']==0) $wsp_ile=1;
+if($_POST['opal']==2) $wsp_ile=1;
+if($_POST['opal']==1) $wsp_ile=0.001;
+if($_POST['opal']==3) $wsp_ile=0.001;
+
+if(isset($_POST['ile'])) { 
+	$ile_mc= 	$_POST['ile']*30;
+	$zl_mc= 	$_POST['ile']*30*$stawka*$wsp_ile;	
+	$zl_mc_1= 	$_POST['ile']*30*$stawka_1*$wsp_ile;	
+}
+
+//var_dump($prognoza_r[intval(date(m))].'<br>'.$ile_mc.'=='.round(date(m),2).'<br>');
+
+//echo $_POST['opal'].'=opal  wsp='.$wsp_ile.'<br>';		
+if(isset($_POST['pow'])) {
+	echo '
+		<table border="1px" width=350 bgcolor="#ADD8E6">
+		<tr id="t01"><td id="t01"></td>
+			<td width=70 align=center><br>Na dzień<br><br> </td>
+			<td width=70  align=center><br>Na m-c <br><br></td>
+			<td width=70  align=center><br>Na rok <br><br></td></tr>
+		<tr id="t01"><td id="t01">	Opał  [ilość]:</td>
+			<td align=center>		'. 		round($ile_mc/720*24,1).'</td>
+			<td id="t01" align=center>	'. 	$ile_mc.'</td>
+			<td id="t01" align=center> '.				(round($ile_mc/$wsp/100)*100).'<br/></td></tr>
+		<tr id="t01"><td id="t01">	Opał - ceny 2021r [zł]:</td>
+			<td align=center>'.				round($zl_mc/720*24,1).'zł 		</td>
+			<td id="t01" align=center>'.	$zl_mc.'zł 		</td>
+			<td id="t01" align=center> '.				(round($zl_mc/$wsp/100)*100).' zł<br/></td></tr>
+		<tr id="t01"><td id="t01">	Opał - ceny 2022r [zł]:</td>
+			<td align=center>'.				round($zl_mc_1/720*24,1).'zł 		</td>
+			<td id="t01" align=center>'.	$zl_mc_1.'zł 		</td>
+			<td id="t01" align=center> '.				(round($zl_mc_1/$wsp/100)*100).' zł<br/></td></tr>
+		<tr id="t01"><td   colspan=4><center> <br>Cena jedn 2021r ='.$stawka.' zł/ilość <br>
+						Cena jedn 2021r ='.$stawka_1.' zł/ilość ';
+		
+		$zakres=[21,28,36];
+		$ocena=round((($zl_mc/$wsp/100)*100)/$_POST['pow']);
+		//echo '<br>Ocena='.$ocena;
+		
+		echo '<br><b>';
+	//	echo 'ocieplenie='.$ocie.' nie ocie/srednio/dobrze =>'.round($ocena/2).' / '.round($ocena*0.75).'/'.$ocena.'<br>';
+	
+		Echo '<br>Wyliczone dla domu';
+		Switch ($ocie) {
+			case 0: $wsp_ociep=0.5;	echo ' nieocieplonego'; break;
+			case 1: $wsp_ociep=0.75;echo ' średnio ocieplonego'; break;
+			case 2: $wsp_ociep=1;echo ' dobrze ocieplonego'; break;			
+			
+		}
+		echo  '<br><br>';
+		//echo 'zakres ='.implode(" / ",$zakres). '<br>';
+		$ocena=$ocena*$wsp_ociep;
+		if($ocena<$zakres[0]) 						echo 'NISKIE KOSZTY OGRZEWANIA'; 
+		if($ocena>=$zakres[0])if($ocena<$zakres[1]) echo 'ŚREDNIE KOSZTY OGRZEWANIA';
+		if($ocena>=$zakres[1])if($ocena<$zakres[2]) echo 'WYSOKIE KOSZTY OGRZEWANIA';
+		if($ocena>=$zakres[2]) 						echo 'BARDZO WYSOKIE KOSZTY OGRZEWANIA';
+		
+		echo '</b>		
+		<br/></td></tr>			
+		</table> '.
+		'<br>';
+		//		<table border="1px" width=300 cellpadding=5>
+		echo '<table bgcolor="#1E90FF" border="1px" cellpadding=5  width=300><tr>
+		<th  bgcolor="#1E90FF" colspan="3">	';
+		echo '<h3><b>Prognoza kosztów ogrzewania na kolejne miesiące roku [zł]</b></h3></th></tr>';
+		//round($zl_mc/$wsp/100)*100
+		$zl_=round($zl_mc/$wsp/100)*100;
+		$zl_1=round($zl_mc_1/$wsp/100)*100;
+		echo '
+
+		<tr><td><br><b>M-c</td><td><br><b>Koszt 2021r</td><td><br><b>Koszt 2022r</td></tr>';
+		
+		for($i=1;$i<13;$i++){
+			$wsp=$okres[$i];
+			$zl_00=(round($zl_*$wsp/1000)*10);
+			$suma_0=$suma_0+$zl_00;
+			$zl_01=(round($zl_1*$wsp/1000)*10);
+			$suma_1=$suma_1+$zl_01;
+			echo '<tr><td><br>'.intval($i).'<br></td><td><br>'.($zl_00).',00 zł<br></td>
+			<td><br>'.($zl_01).',00 zł<br></td>
+				</tr>';			
+			}
+		echo '<tr><td><br><b>SUMA</td><td><br><b>'.(round($suma_0/100)*100).',00 zł</td><td><br><b>'.
+					(round($suma_1/100)*100).',00 zł</td></tr>';	
+		echo '</table><br><br>';		
+		}
+		?>
+		
+		</span>		
+		</td></tr></table>
+		</font>
+		</h3>
+		
+		<!-- Początek  MOC   -->
+		<a id="moc">	</a>
+			<center>
+            <h3>
+			<br>		
+					 
+<font style="   font-size:xsmall font-weight: small;    font-style: normal; font-family: Flaticon;" >		
+<center>
+		<table cellpadding=5 bgcolor="#1E90FF" width=380 >
+		<tr  height=90><th  colspan="2">	<h2><b>Kalkulator Moc Palnika <br>Piec z podajnikiem</b></h2>	</th></tr>
+		<tr><td>		
+		<center>
+		<?php
+		if (isset($_POST['wyd'])) $wynik=$_POST['wyd']*$_POST['kal']/4* $_POST['cz_podaw'] /$_POST['cz_przerw']; else $wynik=10.8;
+		
+		?>
+		
+		<form action="#moc" method="post"> 
+		<table>
+		<tr id="t01"><td id="t01">	Wydajność podajnika [kg/h]:	</td><td  width=130>	<input type="number" name="wyd" value=<?php if (isset($_POST['wyd'])) echo $_POST['wyd'] ;else echo '15';?> min=0 max="100"  size=8 maxlength="4" style=" width:80px; text-align: center;"/> 			<br/></td></tr>
+		<tr id="t01"><td id="t01">	Kaloryczność opału [MJ]:	</td><td>	<input type="number" name="kal" value=<?php if (isset($_POST['kal'])) echo $_POST['kal'] ;else echo '26';?> min=0 max="50"  size=8 maxlength="4" style=" width:80px; text-align: center;" / > 	<br/></td></tr>	
+		<tr id="t01"><td id="t01">	Czas podawania [s]:	</td><td>	<input type="number" name="cz_podaw" value=<?php if (isset($_POST['cz_podaw'])) echo $_POST['cz_podaw'] ;else echo '5';?> min=0 max="5000"  size=8 maxlength="4" style=" width:80px; text-align: center;" /> 	<br/></td></tr>		
+		<tr id="t01"><td id="t01">	Czas przerwy [s]:	</td><td>	<input type="number" name="cz_przerw" value=<?php if (isset($_POST['cz_przerw'])) echo $_POST['cz_przerw'] ;else echo '45';?> min=0 max="5000"  size=8 maxlength="4" style=" width:80px; text-align: center;" /> 	<br/></td></tr>		
+		<tr id="t01"><td id="t01">	Moc osiągana [kW]:	</td><td>	<input type="number" name="wynik" value=<?php echo round($wynik,0) ?> readonly size=8 maxlength="4" style="background-color: #ADD8E6; width:80px; text-align: center;"/> 	<br/></td></tr>		
+
+				
+		<tr><td colspan="2" align=center  height=60>	<br>
+			<button type="submit" name='but_' value=2> <a  class="btn1" ><span><b>OBLICZ</b></span> <em></em></a> </button><br><br><br>
+		</td></tr>
+			</form>	
+		</table>
+		<br>
+		</td></tr></table>
+		
+
+
+		
+		</font>
+	</h3>
+		<!-- end  MOC   -->
+		<!-- end  CZAS - MOC   -->	
+	<a id="czas_pod">	</a>
+			<center>
+            <h3>
+			<br>		
+					 
+<font style="   font-size:xsmall font-weight: small;    font-style: normal; font-family: Flaticon;" >		
+	<center>
+		<table cellpadding=5 bgcolor="#1E90FF"   width=360>
+		<tr  height=90><th  colspan="2">	<h2><b>Kalkulator Czas Podawania <br> podajnika</b></h2>	</th></tr>
+		<tr><td>		
+		<center>
+		<?php
+		if (isset($_POST['wynik_czas'])) $wynik_czas=4/($_POST['wyd']*$_POST['kal'])* $_POST['moc_cz'] *$_POST['cz_przerw']; else $wynik_czas=5;
+		
+		?>
+		
+		<form action="#czas_pod" method="post"> 	
+		<table>
+		<tr id="t01"><td id="t01">	Wydajność podajnika [kg/h]:	</td><td  width=130>	<input type="number" name="wyd" value=<?php if (isset($_POST['wyd'])) echo $_POST['wyd'] ;else echo '15';?> min=0 max="100"  size=8 maxlength="4" style=" width:80px; text-align: center;"/> 			<br/></td></tr>
+		<tr id="t01"><td id="t01">	Kaloryczność opału [MJ]:	</td><td>	<input type="number" name="kal" value=<?php if (isset($_POST['kal'])) echo $_POST['kal'] ;else echo '26';?> min=0 max="50"  size=8 maxlength="4" style=" width:80px; text-align: center;" / > 	<br/></td></tr>	
+		<tr id="t01"><td id="t01">	Czas przerwy [s]:	</td><td>	<input type="number" name="cz_przerw" value=<?php if (isset($_POST['cz_przerw'])) echo $_POST['cz_przerw'] ;else echo '45';?> min=0 max="5000"  size=8 maxlength="4" style=" width:80px; text-align: center;" /> 	<br/></td></tr>		
+		<tr id="t01"><td id="t01">	Moc osiągana [kW]:	</td><td>	<input type="number" name="moc_cz" value=<?php if (isset($_POST['moc_cz'])) echo round($_POST['moc_cz'],0) ;else echo '11';?> min=0 max="50"  size=8 maxlength="4" style=" width:80px; text-align: center;" /> 	<br/></td></tr>	
+		<tr id="t01"><td id="t01"  border=4>	Czas podawania [s]:	</td><td>	<input type="number" name="wynik_czas" value=<?php echo round($wynik_czas,1) ?> readonly size=8 maxlength="4" style="background-color: #ADD8E6; width:80px; text-align: center;"/> 	<br/></td></tr>	
+		
+				
+		<tr><td colspan="2" align=center  height=60>	<br>
+			<button type="submit" name='but_' value=7> <a  class="btn1" ><span><b>OBLICZ</b></span> <em></em></a> </button><br><br><br>
+		</td></tr>
+			</form>	
+		</table>
+		<br>
+		</td></tr></table>
+		
+
+
+		
+		</font>
+	</h3>
+		<!-- end  CZAS - MOC   -->		
+					
+ 
+<!-- START  PODTRZYMANIE  OSCZEDNOŚĆ  -->	
+	<a id="podtrzymanie">	</a>
+			<center>
+            <h3>
+			<br>		
+					 
+<font style="   font-size:xsmall font-weight: small;    font-style: normal; font-family: Flaticon;" >		
+	<center>
+
+		<?php
+		
+		
+if (isset($_POST['wyn_podtrz'])) $wyn_podtrz=4/($_POST['wyd']*$_POST['kal'])* $_POST['moc_cz'] *$_POST['cz_przerw']; else $wynik_czas=5;
+
+//////////////////////////////////????????????????		
+///////////////////////????????????????
+///////////////////////????????????????
+function funk_wstaw($nazwa_otrz,$lub, $val_min, $val_max,$val_len,$size_v,$wid_v,$ali){
+		
+
+//if (isset($_POST['$nazwa_otrz'])) echo 'OTRZYMAL='.$_POST['$nazwa_otrz'];
+
+	$wstaw='<input type="number" name="'.$nazwa_otrz.'" ';
+
+
+
+if(isset($_POST['praca_g'])&&(isset($_POST['praca_pod']))&&(isset($_POST['przerw_g']))&&(isset($_POST['przerw_pod_s']))&&(isset($_POST['przerw_pod_m']))) 
+{
+	$flaga=1;
+	$przer_pod_1=$_POST['przerw_pod_s']+$_POST['przerw_pod_m']*60;
+	$g_1h=round($_POST['praca_g']/(($_POST['praca_g']+$_POST['przerw_g'])/60),1);
+	$pod_1h=round($_POST['praca_pod']/(($_POST['praca_pod']+$przer_pod_1)/60),1);
+	$roznica_1h=$g_1h-$pod_1h;
+	$proc_1h=round(100*$g_1h/$pod_1h,0);
+
+	//echo $g_1h.'jest'.$pod_1h;
+	
+}
+switch ($nazwa_otrz) {
+		case 'g_1h': $wstaw=$wstaw.'value='.$g_1h.' ';break;
+		case 'pod_1h': $wstaw=$wstaw.'value='.$pod_1h.' ';break;
+		case 'roznica_1h': $wstaw=$wstaw.'value='.$roznica_1h.' ';break;
+		case 'proc_1h': $wstaw=$wstaw.'value='.$proc_1h.' %';break;
+		
+		default:{
+	
+if (isset($_POST[$nazwa_otrz])) $wstaw=$wstaw.'value='.$_POST[$nazwa_otrz].' ' ;else 
+	$wstaw=$wstaw.'value='.$lub.$_POST[$nazwa_otrz].' ';
+		}
+		} 
+//if (isset($g_1h))||(isset($g_1h))||(isset($pod_1h))||(isset($g_1h))||(isset($g_1h)) {
+
+$wstaw=$wstaw.' min="'.$val_min.'" max="'.$val_max.' "  size='.$size_v.' maxlength="'.$val_len.' " style=" width:'.$wid_v.'px; text-align: '.$ali.';"'; 
+	$wst_1="	<br/></td> \n";
+	
+	switch ($nazwa_otrz) {
+		case 'g_1h': 		$wstaw=$wstaw.' readonly >'.$wst_1;break;
+		case 'pod_1h': 		$wstaw=$wstaw.' readonly >'.$wst_1;break;
+		case 'roznica_1h': 	$wstaw=$wstaw.' readonly >'.$wst_1;break;
+		case 'proc_1h': 	$wstaw=$wstaw.' readonly >%'.$wst_1;break;
+		case 'przerw_pod_m': $wstaw=$wstaw.'>[min]'.$wst_1;break;
+		case 'przerw_pod_s': $wstaw=$wstaw.' >[sek]'.$wst_1;break;
+		
+		default : $wstaw=$wstaw.'>'.$wst_1;break;
+	}
+
+	echo ''.$wstaw.'' ;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////		($nazwa_otrz,$lub, $val_min, $val_max,$val_len,$size_v,$wid_v,$ali)
+
+//	echo ' <br> WYNIKI:'.$_POST['praca_g'].'++'.$_POST['przerw_g'].'++'.$_POST['praca_pod'].'++'.$_POST['przerw_pod_m'].'++'.$_POST['przerw_pod_s'].'++  <br>';
+//	echo $g_1h.'jest'.$pod_1h.'  <br>';
+//		<tr id="t01"><td id="t01">	TRYB PODTRZYMANIA czas przerwy [sek]:	</td><td><?php funk_wstaw('przerw_pod_s',0,0,2000,4,10,60,'center'); 
+//<tr id="t01"><td id="t01">	 jak dlugo trwa [min]:	</td><td><?php funk_wstaw('ile_pod',30,0,1000,6,10,60,'center');
+		?>
+<table cellpadding=5 bgcolor="#1E90FF"   width=350>
+		<tr  height=90><th  colspan="2">	<h2><b>Kalkulator OSZCZĘDNOŚCI <br>TRYB PODTRZYMANIA</b></h2>	</th></tr>
+		<tr><td>		
+		<center>
+		<form action="#podtrzymanie" method="post"> 	
+		<table>
+		<tr id="t01" height=10 ><th COLSPAN=3 style=" background-color:#E0FFFF;  text-align:center; ">WPISZ DANE </th></tr>
+		<tr id="t01"><td rowspan=2 style=" background-color:#40E0D0; "><b>TRYB GRZANIA</b></td>
+			<td id="t01" align="left" >	 czas pracy podajnika [sek]:	</td><td  width=130>	 <?php funk_wstaw('praca_g',5,1,500,3,10,60,'center');?> </tr> 
+		
+		<tr id="t01"><td id="t01">	 czas przerwy podajnika[sek]:	</td><td>	 <?php funk_wstaw('przerw_g',40,0,500,3,8,60,'center');?> 
+		<tr id="t01"><td rowspan=2 style=" background-color:#40E0D0; "><b>TRYB PODTRZYMANIA</b></td>
+			<td id="t01">	czas pracy podajnika [sek]:	</td><td>	 <?php funk_wstaw('praca_pod',15,1,2000,4,10,60,'center');?>
+		
+		<tr id="t01"><td id="t01">	 czas przerwy podtrzymania [min:sek]:	</td><td align="center"><center>
+							<table><tr><td><?php funk_wstaw('przerw_pod_m',10,0,3000,4,10,60,'center');?> </tr> 
+							<tr><td><?php funk_wstaw('przerw_pod_s',0,0,2000,4,10,60,'center');?> </tr></table></td></tr>
+							
+
+		<tr><td colspan="3" align=center  height=60>	<br>
+			<button type="submit" name='but_' value=5> <a  class="btn1" ><span><b>OBLICZ</b></span> <em></em></a> </button><br><br>
+		</td></tr>	</table>	
+		<table>
+		<tr id="t01" height=10 ><th COLSPAN=3 style=" background-color:#E0FFFF;  text-align:center; "> WYNIKI</th></tr>
+		<tr id="t01">
+			<td id="t01" style=" text-align:center;">	 Czas pracy podajnika  / godzinę <br><b>TRYB GRZANIA [min]:	</b></td>
+			<td width=100><?php funk_wstaw('g_1h','',1,100,8,10,60,'center; background-color: #ADD8E6');?>
+		<tr id="t01"><td id="t01"  style=" text-align:center; ">	Czas pracy podajnika / godzinę <br><b>TRYB PODTRZYMANIA [min]:	</b></td><td>	<?php funk_wstaw('pod_1h','',0,100,8,10,60,'center; background-color: #ADD8E6');?>
+		
+		<tr id="t01"><td id="t01"  style=" text-align:center; "><b>W 1h różnica GRZANIE - PODTRZYMANIE [min]:	</b></td><td><?php funk_wstaw('roznica_1h','',-2000,2000,5,10,60,'center; background-color: #ADD8E6');?>
+		<tr id="t01"><td id="t01"  style=" text-align:center; "><b>Oszczędność węgla <br> GRZANIE / PODTRZYMANIE[ % ]:	</b></td>
+		<td>	<?php funk_wstaw('proc_1h','',-500,500,5,10,60,'center; background-color: #ADD8E6');?>
+		
+				
+
+			</form>	
+		</table>
+		</td></tr></table>
+		
+
+
+		
+		</font>
+	</h3>
+		<!-- end  CZAS - MOC   -->		
+ </div><!-- end title -->
+
+                
+            </div><!-- end container -->
+        </section>
+
+        <section class="section lb nopadtop noover">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="service-box m30">
+                            <i class="flaticon-monitor"></i>
+                            <h3>Porada 1.</h3>
+                            <p>Niższa temperatura to niższe koszty i nie zawsze to utrata komfortu</p>
+							<h3>Porada 2.</h3>
+                            <p>Śledź zużycie mediów</p>
+							<h3>Porada 3.</h3>
+                            <p>Dopasuj ogrzewanie do ciebie</p>
+							<h3>Porada 4.</h3>
+                            <p>Czyść piec raz w tygodniu</p>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="service-box m30">
+                            <i class="flaticon-technology"></i>
+                            <h3>Skorzystaj z Naszej wiedzy</h3>
+                            <p>Zadzwoń/SMS 538 137 235 <br>U ciebie na miejscu rozwiążemy twój problem i pomożemy ZMIEJSZYĆ spalanie Twojego pieca<br>
+							
+							Pomagamy również zdalnie dobrać nastawy sterownika aby spadły koszty Twojego ogrzewania 70 zł<br>
+							Inwestujesz 120<sup>zł</sup> [ plus koszt dalszego dojazdu ] zyskujesz <b> kilkanaście <sup>%</sup>oszczędności</b> na rok.</p>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="service-box m30">
+                            <i class="flaticon-gears"></i>
+							<h3>Zarabiaj na ogrzewaniu</h3>
+                            <p>Zmniejszenie kosztów ogrzewania to TWÓJ zysk.		
+							</p>
+                            
+                        </div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section><!-- end section -->
+
+								
+        <section class="section lb">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h3>Aktualności</h3>
+                    <p>Przydatne informacje</p>
+                </div><!-- end title -->
+
+                <div class="row text-center">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="blog-box">
+                            <div class="post-media">
+                            <!--     <a href="#"><img src="https://okonato.pl/oko/images/upload/blog_01.jpg" alt="" class="img-responsive"></a>  -->
+                            </div><!-- end media -->
+
+                            <div class="blog-desc">
+                                <h4><a href="">Koszt wymiany pieca gazowego</a></h4>
+                                <p>Koszt modernizacji kotłowni polegającej na usunięciu starego pieca i zabudowę pieca gazowego to wydatek 25 tys. zł</p>
+                            </div><!-- end blog-desc -->
+
+                            <div class="post-meta">
+                                <ul class="list-inline">
+                                    <li><a href="">14 11 2021</a></li>
+                                    <li><a href="">by OkoNaTo.pl</a></li>
+                                    <li><a href="">Udostępnij link</a></li>
+                                </ul>
+                            </div><!-- end post-meta -->
+                        </div><!-- end blog -->
+                    </div><!-- end col -->
+
+ <div class="row text-center">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="blog-box">
+                            <div class="post-media">
+                            <!--     <a href="#"><img src="https://okonato.pl/oko/images/upload/blog_01.jpg" alt="" class="img-responsive"></a>  -->
+                            </div><!-- end media -->
+
+                            <div class="blog-desc">
+                                <h4><a id="instrukcje">Instrukcje sterowników i pieców</a></h4>
+                                <p>
+	<a href="https://sekom-pleszew.com.pl/wp-content/uploads/2018/02/Iryd-RTZ-PID-kolor-u%C5%BCytkownika-1S.pdf" target="instr">Piec Pleszew - Sterownik IRYD pdf</a> <br>
+	<a href="https://sekom-pleszew.com.pl/wp-content/uploads/2020/04/Argos-PID-.pdf" target="instr">Piec PLESZEW Sterownik AGROS PID PLUS pdf</a>  <br>
+	<a href="http://technix.net.pl/hosting_plikow/instr-argos-pid_592cfc4e7bc8f.pdf" target="instr">Sterownik MiniSter AGROS PID pdf</a>  <br>
+	
+	<a href="https://fokus-kotly.pl/wp-content/uploads/2017/10/Instrukcja-JOKER-DS2PZ-RC.pdf" target="instr">Sterownik JOKER DS2PZ-RC pdf</a>  <br>
+	<a href="https://www.kotly-dragon.pl/_download/titanic.pdf" target="instr">Sterownik TITANIC pdf</a>  <br>
+	<a href="https://www.techsterowniki.pl/!uploads/products/ST-580-zPID_instrukcja_PL.pdf" target="instr">Sterownik ST 580 PID pdf</a>  <br>
+	<a href="https://www.techsterowniki.pl/!uploads/products/ST-480_instrukcja_PL.pdf" target="instr">Sterownik ST 480 pdf</a>  <br>
+	<a href="https://stalkot.pl/plik,68.pdf" target="instr">Sterownik NEGROS pdf</a>  <br>
+	<a href="https://compit.pl/dokumenty-do-pobrania/sterowniki-do-kot%C5%82%C3%B3w-dokumenty-do-pobrania/category/86-regulator-kot%C5%82a-r510.html?download=198:regulator-kot%C5%82a-r510-wersja-u10" target="instr">Sterownik COMPIT R510 pdf</a>  <br>
+	<a href="http://www.sas.busko.pl/pl/do-pobrania/send/251-tech-st-550h/483-tech-550h-instrukcja-obslugi" target="ST-550H">ST-550H pdf</a>  <br>
+	</p>
+                            </div><!-- end blog-desc -->
+
+                            <div class="post-meta">
+                                <ul class="list-inline">
+                                    <li><a href="">12 12 2021</a></li>
+                                    <li><a href="">by OkoNaTo.pl</a></li>
+                                </ul></div>
+                            </div><!-- end post-meta -->
+                        </div><!-- end blog -->
+                    </div><!-- end col -->
+
+ <div class="row text-center">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="blog-box">
+                            <div class="post-media">
+                            <!--      <a href="#"><img src="images/upload/blog_02.jpg" alt="" class="img-responsive"></a>		-->
+                            </div><!-- end media -->
+
+                            <div class="blog-desc">
+                                <h4><a >Wymagania pomieszczeń dla pieca gazowego </a></h4>
+                                <p>Miejsce montażu pieca: piwnica, pokoje nie przeznaczone do mieszkania. Dla piwnicy min. wysokość to 1,9m, na powierzchni 2m x 2m</p>
+                            </div><!-- end blog-desc -->
+							                   
+                            <div class="post-meta">
+                                <ul class="list-inline">
+                                    <li><a href="">10 11 2021</a></li>
+                                    <li><a href="">by OkoNaTo.pl</a></li>
+                                </ul>
+                            </div><!-- end post-meta -->
+                        </div><!-- end blog -->
+                    </div><!-- end col -->	
+					                    <div class="col-lg-4 col-md-12">
+                        <div class="blog-box">
+                            <div class="post-media">
+                            <!--      <a href="#"><img src="images/upload/blog_02.jpg" alt="" class="img-responsive"></a>		-->
+                            </div><!-- end media -->
+
+                            <div class="blog-desc">
+                                <h4><a >Wymagania dla pieca gazowego </a></h4>
+                                <p>Miejsce motażu w pierwszej kolejności uzgodnić z kominiarzem. Wymagany jest dostęp do komina lub budowa zewnętrznego. 
+								Potrzebny jest wywiem z kotłowni oraz odpowiednio zabudowane drzwi (min. jedne otwierane na zewnątrz pomieszczenia).</p>
+                            </div><!-- end blog-desc -->
+
+                            <div class="post-meta">
+                                <ul class="list-inline">
+                                    <li><a >15 11 2021</a></li>
+                                    <li><a >by OkoNaTo.pl</a></li>
+                                </ul>
+                            </div><!-- end post-meta -->
+                        </div><!-- end blog -->
+                    </div><!-- end col -->	
+                </div><!-- end row -->
+            </div>
+        </section>    
+
+        <section class="section bgcolor">
+            <div class="container">
+               
+                <div class="row callout">
+                    <div class="col-md-4 text-center">
+                        <a id="pomoc"><h3>Pomożemy obniżyć Twoje koszty ogrzewania</h3>
+						
+						</a>
+                       
+                    </div><!-- end col   Promocyjna cena z 20% RABATEM (pełna cena to 75zł ! <br>   -->
+
+                    <div class="col-md-8">
+					<a id="kontakt"> </a>
+					 <p class="lead">
+						70 <sup>zł</sup> pomoc zdalna<br>
+						120 <sup>zł</sup> przyjazd do klienta w rejonie Rybnika
+					</p>
+                    <p class="lead">Kontakt WhatsApp, SMS, telefon lub przez e-mail! <br> To Ci się opłaci!! <br><br>
+						Kontakt -> Nasza pomoc -> Twoje <u>oszczędności!</u><br>
+						Zacznij od uzupełnienia  <a href="https://okonato.pl/audyt.php" target="ankieta"> ANKIETY </a><br>
+						tel. 538 137 235 
+					</p>
+                    </div>
+                </div><!-- end row -->
+               
+            </div><!-- end container -->  
+        </section>
+
+        <footer class="section footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-2 col-md-4">
+                        <div class="widget clearfix">
+                            <div class="list-widget">   
+                                <ul>
+									<li><a href="">Zadzwoń 538 137 235 </a></li>
+                                    <li><a href="mailto:okonatopl@gmail.com">Kontakt e-mail okonatopl@gmail.com</a></li>
+									<li><a href="https://www.youtube.com/channel/UCC3IGRuHgaJ_ggYsmPY0Vvw">Kanał OkoNaTo na You Tube</a></li>									
+                                    <li><a href="https://okonato.pl">Login / Rejstracja</a></li>
+									<!--  //////////  -->
+                                </ul>
+                            </div><!-- end list-widget -->
+                        </div><!-- end widget -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </footer><!-- end footer -->
+
+        <div class="section copyrights">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3">
+                        <div class="cop-logo">
+                            <img src="images/logo-normal.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 text-right">
+                        <div class="cop-links">
+                            <ul class="list-inline">
+                                <li>© 2021 Genius | Design: <a href="https://okonato.ol/oko/">OkoNaTo.pl</a></li>
+								<li><a href=https://www.facebook.com/okonatopl><i class="fa fa-facebook"> Polub nas na Facebook</i></a></li>
+						
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> </div><!-- end menu-wrapper -->
+		
+
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/carousel.js"></script>
+    <script src="js/parallax.js"></script>
+    <script src="js/rotate.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/masonry.js"></script>
+    <script src="js/masonry-4-col.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="videos/libs/swfobject.js"></script> 
+    <script src="videos/libs/modernizr.video.js"></script> 
+    <script src="videos/libs/video_background.js"></script> 
+    <script>
+        jQuery(document).ready(function($) {
+            var Video_back = new video_background($("#home"), { 
+                "position": "absolute", //Follow page scroll
+                "z-index": "-1",        //Behind everything
+                "loop": true,           //Loop when it reaches the end
+                "autoplay": true,       //Autoplay at start
+                "muted": true,          //Muted at start
+                "mp4":"videos/video.mp4" ,     //Path to video mp4 format
+                "video_ratio": 1.7778,              // width/height -> If none provided sizing of the video is set to adjust
+                "fallback_image": "images/dummy.png",   //Fallback image path
+                "priority": "html5"             //Priority for html5 (if set to flash and tested locally will give a flash security error)
+            });
+        });
+    </script>
+
+
+
+
+</body>
+</html>
+  
