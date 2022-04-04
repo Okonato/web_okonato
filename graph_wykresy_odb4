@@ -1,0 +1,955 @@
+	<?php 
+	//include "wifi11.php" // "http://solary.000webhostapp.com/public_html/funkcje.php" ; 
+	// 2021-3-13 g 18
+	?>
+
+	<!DOCTYPE html  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+				"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+	<head><title>Wykres</title>
+	<meta http-equiv="Refresh" content="600" />
+	<link rel="Shortcut icon" href="icona.jpg" />
+	 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+	<style>
+	
+	
+input[type="text"],
+input[type="password"],
+input[type="button"],
+button[type="submit"],
+select,
+textarea {
+		padding:0 5px;
+		vertical-align:top;
+		border:1px solid #54A5DA;
+		height:27px;
+		background:#fff;
+		font-size:16px;
+		font-weight: bold; 
+}
+	#okno_log_wykres {
+		position:absolute; 
+		top: 10px; 
+		left:10em;
+		font-size: 20px; 
+		font-weight: bold; 
+		background-color: #d85757;
+		padding: 0px 4px;
+		color: #ffffff;
+		}
+	#timeToRender {
+		position:absolute; 
+		top: 30px; 
+		left:15em;
+		font-size: 20px; 
+		font-weight: bold; 
+		background-color: #d85757;
+		padding: 0px 4px;
+		color: #ffffff;
+	}	
+td,p	{
+font-size:22px;
+}
+
+komorka_T {
+	background-color: #d85757;
+	background:url(tlo_slajd1.jpg);
+	width:100%;
+	opacity: 0.3;
+	}
+	<?php //{background-color: lightblue;  }>';  //tlo_zolty1.jpg tlo_zgiecie1.jpg tlo_slajd1.jpg 
+	?>
+	
+
+	
+</style>
+</head>
+<body bgcolor=#F5F5F5>
+<center>
+<?php 
+	 /// tr:hover {background-color: #f5f5f5;}
+	 // ustalenie daty z serwera
+	ini_set( 'display_errors', 'Off' ); 
+	date_default_timezone_set('Europe/Warsaw');
+	session_start();
+	
+/////////////////////////////////////////
+/// wyjatkowe traktowanie Usera raf123
+	
+	$_SESSION['user']='raf123';
+	if (isset($_SESSION['user'])) 
+	if(!isset($_SESSION['wejscie'])) 	{  // pomin przy wejsciu z LOGOWANIA
+		if (isset($_POST['odbX']))
+			{		$_SESSION['kod']=$_POST['odbX'];unset( $_POST['odbX']);}
+			else 	
+			if(!(isset($_SESSION['kod'])))
+				$_SESSION['kod']='101';
+	}
+	else unset( $_SESSION['wejscie']);  //  unset gdy juz jestes na stronie
+	
+	//$_SESSION['kod']='101';
+	$tabela_nazwa="odb".explode(',',$_SESSION['kod'])[0];  
+//	$tabela_nazwa="odb101";
+	$user1="nazwa użytkownika";
+		 /////////////////////////
+	echo '	 <span id="loguj">';
+	 if (isset($_SESSION['user'])) {
+	 //'.$_SESSION['user'].'.
+	//	echo ' <p>Witaj,  Kod twojej tabeli:'.explode(',',$_SESSION['kod'])[0].  '</p>';
+		}
+	echo '</span>	'; 
+				 
+		 //////////////////////////
+	  ?>
+	  	  <div id="chartContainer" style="height: 350px; width: 75%;"></div>
+		<script 	src="https://canvasjs.com/assets/script/canvasjs.min.js">
+		</script> 
+
+		
+		<span id="okno_log_wykres"></span>	
+		<span id="timeToRender"></span>	
+	  <?php
+	$skala1=[1,1,1,1,1,1,1];
+		
+	$skala0=1.12;
+	$tekst[0]='Pompa CWU';
+	$tekst[1]='Pompa PODŁ';
+	$tekst[2]='Pompa CO';
+
+	///   t6 = PRACA POMPY   //  t11 = DZIEŃ    // t12 = GODZINA
+
+
+	////////########################################////////
+	////////########################################////////
+	////////########################################////////
+	////////############            ################////////
+	////////############  S  Q   L  ################////////
+	////////########################################////////
+		$mysql_server = "localhost";   
+		$mysql_admin = 	"u692052177_oko_nazwa";   // u692052177_oko
+		$mysql_pass = 	"SyryniaX1."; 		//"kara1298";       // hasło     
+		$mysql_db =    	"u692052177_oko";   	// u692052177_oko_nazwa
+
+
+			$link = mysqli_connect($mysql_server, $mysql_admin, $mysql_pass , $mysql_db);  //
+			if (mysqli_connect_errno()) 
+				{
+			//	printf('Nie udało się połączyć: %s', mysqli_connect_error());
+				//exit();
+				} else
+			//	echo " Połączone OK<br> \n";
+
+		if (!$link) {
+			die('Not connected : ' . mysql_error());
+			}
+	$sql="SELECT * FROM klient WHERE nazwa='".$_SESSION['user']."'";
+		if($wynik=mysqli_query($link, $sql)){
+			while($row = mysqli_fetch_assoc($wynik)){
+				//echo 'Log='.$row['ost_log'].'/ MAC='.$row['mac'].'/ ip2='.$row['ip2'].'/kod='.$row['kod'].'<br>';
+		}}
+
+
+	/////////////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	/////////////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	/////////////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	//INSERT INTO `odb101`(`id`, `kod`, `czas`, `czujnik0`, `czujnik1`, `czujnik2`, `czujnik3`, `czujnik4`, `czujnik5`, 
+	//`adr0`, `adr1`, `adr2`, `adr3`, `adr4`, `adr5`, `adr6`, `czas0`, `czas1`, `czas2`, `czas3`, `czas4`, `czas5`, `dzwiek`) 
+	////onchange="this.form.submit()"
+
+//// #FFE4B5  KOLOR !!  #708090
+	echo '<br><table border=1 align="center" cellapdding=5 bgcolor=	#DCDCDC width=380><tr><td> <center>';
+	//echo '<tr><td>'; // glowna tabela kolumna 1				
+		
+	//////////////
+	//////////////   Wybierz tabelę/kod  // kolor #ADD8E6
+
+$grupa=$_SESSION['kod'];	
+	echo '<br><table  bgcolor=	#ADD8E6 class="komorka_T" FRAME="above" border="1" CELLSPACING=3 width="330">';			
+	echo '<tr><td>	<center>gruPa='.$grupa.'=';
+	
+	$i=0;
+	$sql="SELECT * FROM klient ";
+		if($wynik=mysqli_query($link, $sql)){
+			while($row = mysqli_fetch_assoc($wynik)){
+				$opis_db[0][$i]=$row['opis'];
+				$opis_db[1][$i]=$row['kod'];
+				$opis_db[2][$i]=$row['nazwa0'];
+				$i++;
+				//echo 'Log='.$row['ost_log'].'/ MAC='.$row['mac'].'/ ip2='.$row['ip2'].'/kod='.$row['kod'].'<br>';
+		}}
+		
+
+	echo '<br>Wybierz tabelę/kod:'.implode(" i ",explode(',',$_SESSION['kod'])).'
+	<form action="odb4.php" method="POST" >
+	<select name="odbX"  onchange="this.form.submit()"  size="1">  ';
+	echo '<option>Wybierz odczyt </option>';
+////////////////////////////////////////////
+///////////////////////////////////////////
+	//////////    POCZATEK dane NADAJNIK
+	
+	/////////// ODCZYTY dostępnych grup   POCZATEK
+	$i=0;
+
+	$sql='SELECT * FROM nadajnik_db ';
+	if($wynik=mysqli_query($link, $sql)){			
+	//echo '<select>';
+		while($row = mysqli_fetch_array($wynik))		
+		{
+
+				echo '<option value='.$row['grupa'].'>'.$row['nazwa']."</option> \n";
+			$i++;	
+		}
+//		echo '</select>';
+		};
+	/////////// ODCZYTY dostępnych grup    KONIEC
+	//******************************************************
+	/////////// ODCZYTY CZUJNIKOW   POCZATEK
+	$i=0;
+	$sql='SELECT * FROM nadajnik_db WHERE grupa = '.$grupa;
+	
+
+	if($wynik=mysqli_query($link, $sql)){		
+	echo "<option>=++=</option> \n";	
+	//echo '<select>';
+		while($row = mysqli_fetch_array($wynik))		
+		{
+			$ile_nazw[$i]=substr_count($row['czujnik_naz'],';');
+			$cz_nazwy[$i]=explode(';',$row['czujnik_naz']);			
+			foreach($cz_nazwy[$i] as $wart)
+			{
+				$czuj_nazwa_sel[$i]=$wart;
+				echo '<option>'.$i.$wart."</option> \n";
+				$i++;	
+			}
+		}
+		$ile_cz=$i;
+		echo "<option>=*=</option> \n";
+//		echo '</select>';
+		};
+	/////////// ODCZYTY CZUJNIKOW    KONIEC
+	
+	/// KONIEC dane NADAJNIK *****************
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+	
+	
+	
+	
+		echo '<option value=101>---</option>';
+		echo '<option value=101>Piec</option>';
+		echo '<option value=105>Parter</option>';
+		echo '<option value=102>Bojler</option>';
+		echo '<option value=106>TEST 106</option>';		
+		echo '<option value=103>TEST 3</option>';
+		echo '<option value=104>TEST 4</option>';
+		echo '<option value=107>TEST 7</option>';
+				
+	if(isset($_SESSION['kod'])) 
+	{			
+	////////////////   wczyt tabele kodow TABEL
+	Foreach(explode(",",$_SESSION['kod']) as $kod_kolej){
+			echo '<option value='.($kod_kolej).'>'.$kod_kolej.'</option>';
+			}			
+		}
+	//	else 
+	//		echo '<option value=""> </option>';
+$x=0;
+	foreach($opis_db[0] as $i => $dana){
+	if ($x<0){
+		$x++;
+		echo '<option value='.($opis_db[1][$i]).'>'.$opis_db[1][$i].'='.$opis_db[0][$i].'</option>';
+			//echo '<option value='.($opis_db[1][$i]).'>'.$opis_db[1][$i].'='.$opis_db[0][$i].'>'.$opis_db[2][$i].'</option>';
+		}	
+	}
+	echo '
+		</select>
+		</form>	';
+	echo '</td></tr></table><br/>';	
+		
+/////////////////////////
+	$min_w2=0;
+	$max_w2=100;
+	$i=0;
+	$opcja=1.2;
+	$file1 = "ustaw.txt"; 
+	
+	
+	if (file_exists($file1))
+	if ($fp = fopen($file1, 'r'))
+	{
+	while(!feof($fp))
+	{  $linia = fgets($fp);
+	   $kolej[$i]=substr($linia,0,2);
+	   $nazwy[$i]=substr($linia,2,strlen($linia)-1);
+
+	   switch ($kolej[$i]) {
+		case "x ":
+			$opcja=$nazwy[$i]; // $opcja=$nazwy[$i]; 
+			break;
+		case "d ":
+			$min_w3=$nazwy[$i];
+			break;
+		case "g ":
+			$max_w3=$nazwy[$i];
+			break;
+		case "s ":
+			$stala2=$nazwy[$i];
+			break;
+		default:
+		{ $kolej[$i]=intval(substr($linia,0,2));
+		$i++;
+		}
+		break;
+		}
+	  // echo $nazwy[$i].'*opcja ='.$kolej[$i].'= cale='.$linia.'</br>'; 
+	}
+	fclose($fp);
+	}
+	
+
+	/// ODSWIEZ i GODZINA ODCZYTU
+
+	$file='nowy.txt';
+
+	//$nazwa_tab=str_replace("-", "_", substr($_POST['arch1'],0,7));
+	$i=0;
+	$tablica = explode(";", file($file)[0]);
+	$nazwa_tab=$tabela_nazwa;
+///	echo '='.$nazwa_tab.'=<br>';
+	
+	$sql="SELECT * FROM ".$nazwa_tab." ORDER BY id DESC LIMIT 1"; //." ORDER BY id DESC";  // LIMIT 150  WHERE  nr<10";   /// czy istnieje   PRAWIDLOWE  !!!!!		
+			if($wynik=mysqli_query($link, $sql)){
+			while($row = mysqli_fetch_array($wynik)){
+				
+			echo '<center><span style="font-size: medium">Ostatni zapis : '.$row[2].'</span>'; // date("d-m-Y H:i",
+		
+			$roz=$row[2];
+			$roz= ceil((time()-$roz));//86400);
+			}	
+		}
+		  /////////////////////////////		
+		 ///////////           ///////
+		//////////   S Q  L  ////////
+	$sql="SELECT * FROM ".$nazwa_tab." ORDER BY id DESC LIMIT 1"; //." ORDER BY id DESC";  	
+
+		if($wynik=mysqli_query($link, $sql))
+		while($row = mysqli_fetch_array($wynik))
+		{	
+		$koniec=intval( mysqli_num_rows($wynik));
+
+
+	echo '<br><table  bgcolor=#ADD8E6 class="komorka_T" FRAME="above" border="1" CELLSPACING=3 width="330">';			
+	$cz_liczba=0;
+
+	
+	$xx2=Array(0,1,2,3,4,5,6);
+	
+	for($xx1=0;$xx1<10;$xx1++){
+		$xx=$xx2[$xx1];
+		//echo $row[$kolej[$xx]].'='.$row[$xx1]."<br>\n";	 
+		$t_tab[$xx1]=$row[$xx1+3];
+		
+		if(is_numeric ($t_tab[$xx1]))
+		{
+			if (($xx1) % 1==0) echo '<tr>';
+			echo '<td align=right width=200  height=30  border="4" >';  
+		
+			echo ' Temp '.$nazwy[$xx1].'=    </td><td width=100 > '.$t_tab[$xx1];    //is_numeric($tab1[$a1]))		
+			echo '</td>';
+			if (($xx1+1) % 1==0) 
+			{ 
+				echo '</tr>'; $cz_liczba++;
+			}
+		}
+	}
+		
+	// echo '</table>';
+				
+	////////////////////////// ********************
+	////////////////////////// ********************
+		} else echo 'Brak danych';
+			
+		if(isset($_POST['zakres1'])) {       ////// ZAKRE DZIŚ
+			$zakres1=$_POST['zakres1'];
+			$zakres2=$_POST['zakres2'];
+			$arch1=$_POST['arch1'];
+			$godz=$_POST['godz1'];
+		} else
+			{
+			$arch1=date("m");	
+			$zakres1=date("d")-2;//date(d)-2
+			$zakres2=date("d");
+			$godz=12;
+			}	
+
+
+	////////////////////////////////////*****************************	
+		///  ###    <button type="submit">Wykresy</button>
+	echo '</td></tr></table><br/>';	
+
+	////// ZAKRES GODZINOWY 
+	//<select name="data_oddo"  onchange="this.form.submit()"  size="1"> 
+	/// KOLOR #ADD8E6   #778899!!
+	
+	
+	echo '	
+	<table bgcolor=#ADD8E6 border=1 width=300 align=center><tr><td>
+	<center>	';
+	if(isset($_POST['data_2']) && isset($_POST['data_2'])) 
+	{
+	//	echo 'Data od '.$_POST['data_1'].' do '.$_POST['data_2'].'<br>';
+	//	echo 'Data od..  do.. <br>';
+		$zakres1=$_POST['data_1'];
+		$zakres2=$_POST['data_2'];
+	}
+	
+	
+/////////////////  Ustaw dakresy dat od ... do....
+	if(isset($_POST['data_1'])) $v1='value='.$_POST['data_1']; else $v1='';
+	if(isset($_POST['data_2'])) $v2='value='.$_POST['data_2']; else $v2='value='.date("Y-m-d",time());	
+	
+	echo' Wyświetl dane za okres <br> 
+	<form action="odb4.php" method="POST">	
+	<input type="date" name="data_1" '.$v1.'>
+	<input type="date" name="data_2" '.$v2.'>
+	</br>
+	<button type="submit">Potwierdź zakres</button>
+	</form> 
+		
+	
+	<form action="odb4.php" method="POST">		
+	 lub wstecz o:
+	<input type="hidden" name="arch1" value="0">
+	<input type="hidden" name="zakres1" value="'.(date("d")).'">
+	<input type="hidden" name="zakres2" value="'.(date("d")).'">
+
+
+	<select name="godz1"  onchange="this.form.submit()"  size="1">  ';
+	echo '<option value=0></option>';	
+	echo '<option value=2>2</option>';
+	//echo '<option value=2>2</option>';
+	for($x1=1;$x1<20;$x1++)
+	if ($x1<=7)
+		echo '<option value='.($x1*5).'>'.($x1*5).'</option>';
+	
+	else
+		//if ($x1>11)
+		echo '<option value='.(($x1-6)*24).'>'.round(($x1-6)).' dni</option>';
+	//		else
+		//	echo '<option value='.(($x1-10)*24*7).'>'.round(($x1-10)*7).' dni</option>';	
+	
+	echo'
+	</select> 
+	</form>';	
+
+	////// ZAKRES DZIŚ
+	echo ' 
+	<center>
+	<table><tr><td>
+	<form action="odb4.php" method="POST">	 
+	<input type="hidden" name="arch1" value="1">
+	<input type="hidden" name="zakres1" value="'.date("d").'">
+	<input type="hidden" name="zakres2" value="'.date("d").'">
+	<input type="hidden" name="godz1" value="12">
+	<button type="submit">DZIŚ</button>
+	</form> </td><td>';
+
+
+	////// <td>  ZAKRES OD WCZORAJ	
+	echo '
+	<form action="odb4.php" method="POST">	
+	<input type="hidden" name="arch1" value="3">
+	<input type="hidden" name="zakres1" value="'.(date("d")-1).'">
+	<input type="hidden" name="zakres2" value="'.(date("d")).'">
+	<input type="hidden" name="godz1" value="48">
+	
+	<button type="submit">Od wczoraj</button>
+	</form> </td></tr></table>
+	</td></tr></table>';
+
+
+	echo '</td><td>'; // glowna tabela kolumna 2  ##########################################	
+	echo '<table  bgcolor=#ADD8E6 class="komorka_T" FRAME="above" border="1" CELLSPACING=3 width="330">';
+	echo '<tr><td>';
+	$ile_cz=10;
+	
+	///// wskaz czujniki z BD do wyswietlenia na wykresie
+	for($i=0;$i<$ile_cz;$i++)
+	{
+
+		echo ' <label><input type="checkbox" name="czuj_check'.$i.'"  value="'.$i.'">
+		cz nr'.$czuj_nazwa_sel[$i].'</label><br>';			
+		
+	}
+	
+	echo '</td></tr></table>'; // glowna tabela kolumna 2  ##########################################
+	
+	echo '</td>	</tr></table>';	
+	
+///////////////////////////////////////////////////	ZAKRE DZIŚ
+		if(isset($_POST['zakres1'])) {       ////// ZAKRE DZIŚ
+			$zakres1=$_POST['zakres1'];
+			$zakres2=$_POST['zakres2'];
+			$arch1=$_POST['arch1'];
+			$godz=$_POST['godz1'];
+		} else
+			{
+			$arch1=1;	
+			$zakres1=date("d");
+			$zakres2=date("d");
+			$godz=4;
+			}	
+/*			
+	echo '<div id="chartContainer" style="height: 350px; width: 75%;"></div>
+		<script 	src="https://canvasjs.com/assets/script/canvasjs.min.js">
+		</script> ';
+	
+	*/
+	
+
+	///////////////////////////////////////////////////////	
+	//////////////////  O D C Z Y T  //////////////////////
+
+	$dane="t:";
+	$dane1="|";
+	$dane2="|";
+	$dane3="|";
+	$dane4="|";
+	$dane5="|";
+	$dane="t:";
+	$opis="0:|";
+	$opis1="|2:|";
+
+		//////***********************************
+		//////***********************************
+		///// ZAKRES Z BAZY DANYCH
+		//////***********************************
+		// t11 dzien   t12 godz  mc miesiac
+		// arch   1 = dziś  2= wczoraj   3 == OD WCZORAJ
+	
+	///  OK   $sql='SELECT * FROM '.$nazwa_tab.' WHERE '.$zakres.' ORDER BY id DESC';  //
+	
+	$wstecz=$godz;
+		$zakres1=time();
+		$zakres2=time()-($wstecz*3600);
+	
+		$zakres=" czas BETWEEN '". date("Y-m-d H:00",$zakres2)."' AND '". date("Y-m-d H:i",$zakres1)."'";
+		$rozstep1=$zakres1-$zakres2;
+	//if ($rozstep1>(3600*10)) var_dump('Różnica='.intval($rozstep1).'<br>');
+
+	if(isset($_POST['data_2']) && (isset($_POST['data_1']))) 
+	{
+	//	echo 'Data od '.$_POST['data_1'].' do '.$_POST['data_2'].'<br>';
+	//	echo ' przed :'.$zakres2.'<br>';
+		$zakres1=$_POST['data_1'];
+		$zakres2=$_POST['data_2'];
+		//$zakres=" czas BETWEEN '". date("Y-m-d",$zakres1)."' AND '". date("Y-m-d",$zakres2)."'";
+		$zakres=" czas BETWEEN '". $zakres1."' AND '". $zakres2."'";
+	//	echo ' Po :'.$zakres2.' - przekszt -> '. date("mmmm-d",strtotime($zakres2)).' <br>';
+	}
+	
+	////////////////////////////////////////////
+	///////////////////////////////////////////
+	$sql='SELECT id FROM '.$nazwa_tab;
+	if($wynik=mysqli_query($link, $sql)){			
+		$koniec=intval( mysqli_num_rows($wynik));		
+		echo " Ilość pozycji w CAŁEJ BD to:".$koniec."  \n";  // !!!!!!!!!!!!!!!!!!!!!!!!!
+		};
+
+
+	$sql='SELECT `id`, `kod`, `czas`, (`czujnik0`), (`czujnik1`), (`czujnik2`), (`czujnik3`), (`czujnik4`), (`czujnik5`),
+	`adr0`,	`adr1`, `adr2`, `adr3`, `adr4`, `adr5`, `adr6` 
+	FROM '.$nazwa_tab.' WHERE '.$zakres.' ORDER BY id ASC'; //DESC ';  //
+
+	//$sql='SELECT * FROM '.$nazwa_tab.' WHERE '.$zakres.'  ORDER BY id ASC'; //DESC ';  //
+	//	if($wynik=mysqli_query($link, $sql)){	$koniec=intval( mysqli_num_rows($wynik));	}
+	
+	echo "<br>".date("Y-m-d h:i",$zakres1)." // ".date("Y-m-d h:i",$zakres2)."<br>";
+	
+//	var_dump ("<br>".$zakres1."==".);
+//	var_dump ("<br>".$godz." -><br>".($sql));	
+
+	//	$sql='SELECT * FROM '.$nazwa_tab.'  ORDER BY id ASC'; //DESC ';  //
+		
+	//	echo date("Y-m-d H:i",$zakres1).'='.$zakres1.'=#='.$zakres2.'=='.date("H",$zakres2).'=='.date("Y-m-d H:i",$zakres2).'  ^^<br> '.$zakres.'<br>';//
+	//	echo $sql.'<br>';
+		//////////////////////////////////////////////////////	*******************  	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		/////////////////////////////////////////////////////	  ODCZYT  ZAKRES		\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		//////////////////////////////////////////////////////	*******************  	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+	
+			if($wynik=mysqli_query($link, $sql)){			
+				$koniec=intval( mysqli_num_rows($wynik));		
+				echo " Ilość pozycji w na wykresie to:".$koniec."  \n";  // !!!!!!!!!!!!!!!!!!!!!!!!!
+					
+	///// while ($nr<$koniec)				//////////////////  O D C Z Y T  ////
+
+	$dziel1=floor($koniec/50);
+	if ($koniec<100) $dziel1=2;
+	//$licz_2=$koniec ;
+	$licz=0;
+	$skala=1.1;  
+	$skala=$opcja;
+	 ///////  S K A L A
+	//echo $opcja."=Opcja DZIEL =".$dziel1."<br> \n";
+	$x=0;
+	$t_x=0;
+	$x_array=0;
+	// $data_points = array();
+	$do_js=array();
+	while($row = mysqli_fetch_array($wynik))
+//	while($row = mysqli_fetch_assoc($wynik))
+	{
+		//	var_dump ($row['id']);	
+		///////////
+	//	for($i=0;$i<18;$i++) 
+	$do_js[$x_array]=implode(',',$row);
+	//var_dump ($do_js[0]."=".$do_js[1]."=".$do_js[4]."<br/>");
+	$x_array++;
+	//if($x_array<5) echo $x_array.'='.$do_js[0].'<br/>'; //[$x_array]
+
+	if ($row['id'] % $dziel1==0)		
+	{
+		//////////////////
+		$x++;
+		for($i=0;$i<6;$i++) 
+		//if(is_numeric($row[$i+3]))
+	//	if(is_int($row[$i+3]))
+		{		
+	//if($row[$i+3]<>"")	
+			$tablica1[$i]=$row[$i+3];     		
+		}	//	else $tablica1[$i]=0;
+		$licz++;   
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	//	$dane=$dane .   round(($tab_1)*$skala+$stala2).",";
+	$dane=$dane.  	round($tablica1[0]*$skala*$skala1[0]+$stala2).",";
+	$dane1=$dane1.  round($tablica1[1]*$skala*$skala1[1]+$stala2).",";//1
+	$dane2=$dane2.  round($tablica1[2]*$skala*$skala1[2]+$stala2).",";
+	$dane3=$dane3 . round($tablica1[3]*$skala*$skala1[3]+$stala2).",";
+	$dane4=$dane4 . round($tablica1[4]*$skala*$skala1[4]+$stala2).",";
+	$dane5=$dane5 . round($tablica1[5]*$skala*$skala1[4]+$stala2).",";   
+	//$dane5=$dane5 . round($t_x*$skala+$stala2).",";     // PODAJNIK
+
+	//$dane6=$dane6 . round($tablica1[$kolej[6]]*$skala+$stala2).",";		// 
+	 // echo '4='.$tablica1[$kolej[2]].'<br>';  
+	 // echo '5='.$tablica1[$kolej[5]].'<br>';
+			if($licz % 100==0) $opis= $opis .date("h-i",$row['czas'])."|";  // 9///if($licz % $dziel1==0) $opis= $opis .$row['czas']."|";  // 9
+			if($licz==1) $opis= $opis .'_'.date("h-i",$row['czas'])."|";  
+		//	if($licz==1) $opis1= $opis1."_".substr($row['czas'],6,4); 		
+		//	if($licz %(5.5)==0) $opis1= $opis1."|".substr($row['daty'],6,4);  //8 
+			if($licz==1) $opis1= date("m-d",$row['czas']); 		
+			if($licz %(50)==0) $opis1= $opis1."|".date("m-d",$row['czas']);  //8 
+		}
+		}  /////  koniec fech _array		 
+	} 
+//	echo $dane1.'<br>';
+//	echo $dane2.'<br>';
+//	echo $opis.'<br>';
+//	echo $opis1.'<br>';
+	//echo $dane5.'<br>';
+	/// koniec SQL
+	//if($licz ==$dziel*1) 
+
+		 
+	$dane=	substr($dane, 0, -1);	$dane1=substr($dane1, 0, -1);$dane2=substr($dane2, 0, -1);
+	$dane3=	substr($dane3, 0, -1);	$dane4=substr($dane4, 0, -1);$dane5=substr($dane5, 0, -1);
+	if(substr( $opis, strlen($opis)-1, strlen($opis))=='|') $opis=substr( $opis, 0,strlen($opis)-1);
+	if(substr( $opis1, strlen($opis1)-1, strlen($opis1))=='|') $opis1=substr( $opis1, 0,strlen($opis1)-1);
+	if(substr( $opis1, strlen($opis1)-1, strlen($opis1))=='|') $opis1=substr( $opis1, 0,strlen($opis1)-1);
+	//if(substr( $opis, strlen($opis)-1, strlen($opis))=='|') $opis=substr( $opis, 0,strlen($opis)-1);
+
+	//echo $min_w3.' MIN i MAX '.$max_w3.' <br>';           !!!!!!!!!!!!!!!!!!!!!!!!!
+	//echo $skala.' SKALA i Stala '.$stala2.' <br>';          !!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+	//////////////////  %%%%%%%%%%%%%%%
+	if ($wyk1 === 10000)
+	{
+	$zrodloobrazka1="http://chart.apis.google.com/chart?cht=lc&chs=900x300&chdl=$legenda&chdlp=l&chg=2,10,10,2&chco=d9351c,a0009f,faac02,79d81c,2a9df0,000000&chd=".
+	$dane.$dane1.$dane2.$dane3.$dane4.$dane5."&chxt=x,y,x&chxl=".$opis.$opis1."&chxr=1,$min_w3,$max_w3,5";
+	echo '<br><img src="'.$zrodloobrazka1.'" alt="Wykres" /><br></p>';
+	}
+
+	?>
+	  <script type="text/javascript">
+
+	  //  var jArray= <?php echo json_encode($do_js ); ?>;
+	
+		var jArr= <?php  echo json_encode($do_js ); ?>;
+		var jNazwy= <?php  echo json_encode($cz_nazwy[0] ); ?>;		
+		var jKod= <?php  echo json_encode($_SESSION['kod']); ?>;
+		var jUser= <?php echo json_encode($_SESSION['user'] ); ?>;
+		var jIle= <?php echo json_encode($x_array ); ?>;		
+	//	alert("user="+jNazwy[1]);
+	//	alert("user="+jKod);
+	//document.getElementById("okno_log").innerHTML = jUser+" ="+jKod; 
+		
+	 </script>
+	 <script> 
+
+//////////////////////////////////////////////////////////////////////	 
+//////////////////////////////////////////////////////////////////////
+///////////////////////////////////		S  Q  L     S C R I P T
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+		
+window.onload = function () 
+{
+	//alert("hoo"+jIle);
+	var ile_pozycji=jIle;
+	var DaneText = [];//(request.responseText).split("\n");;
+		DaneText=jArr;
+		//alert(DaneText[1].length);
+//		owoce.forEach(function(item, index, array) {
+//});
+
+	var i,j;	
+	var nazwa = ["Temp1","Temp2","Temp3","Temp4","Temp5","Temp6","Temp7","Temp8","Temp9","t8","t9","t10"];
+	for(i=0;i< jIle; i++)
+	//var usun = forEach(funktion (item, index, array) 
+	{	
+		str=DaneText[i].split(",");
+		//if (i<4){alert(str.length+"="+str[0]+"="+str[1]);}
+		for(j=0;j<(str.length/2);j++)
+		{
+			if(j% 2==0) 
+			{ 
+				//	if (j<3){ if(i<4) {	alert(str.splice(j,1));}};
+				str.splice(j,1);				
+			}
+		}
+		str.splice(10,str.length-11);
+		DaneText[i]=str.join(",");
+	//	nazwa[i]=jNazwy[i];
+	//	alert(nazwa[i]);
+	}
+	//var nazwa = ["zew","CO","podłodowe","CWU","pokój1","Pomp. CWU","Pomp. podł.","t6","t7","t8","t9","t10"];
+	
+		//		 0 1 	2 3 4 5 6  7 8  9
+	var kolej = [4,5,6,7,8,9,10,11,12];
+//	var kolej = [0,3,4,1,5,2,7,8,5,14,14,6,12,10];
+	var skala=	[1,1,1,1,1,1,1,1,1,1,1,1];
+	//DaneText==jArr.filter(polacz);
+	//DaneText==jArr.filter.join);
+	//DaneText=DaneText.split("\n");
+	var gestosc=3;
+	var dane2=[];
+var ile_czujnik=5;
+		
+
+	var dps = [];
+	for( i=0; i<ile_czujnik ; i++) { dps [i]=[];}	
+
+//alert((DaneText[2].length)+"Dane nr4="+jIle+"\n"+DaneText[2]);	
+//alert((DaneText[3].length)+"Dane nr4="+jIle+"\n"+DaneText[3]);	
+
+var dane1=DaneText.filter(myFunction);
+document.getElementById("timeToRender").innerHTML = "";
+
+
+var dpsX = [];
+		
+function myFunction(value, index, array) {
+	if(index<ile_pozycji-1)
+	{
+	dane2=value.split(',');
+//	document.getElementById("timeToRender").innerHTML += "+"+dane2[4]+" "+dane2[6];
+	//document.getElementById("timeToRender").innerHTML += "="+dane2[1+7];
+	var  x1=0;
+		for( x1=0;	x1<ile_czujnik ;	x1++)  //ile_czujnik;x1++){				
+			{	
+			//	document.getElementById("timeToRender").innerHTML += "+"+index+"// "+x1+"="+dane2[1];
+			//var nr=kolej[x1]*2+8;
+			
+			var nr=x1+4;
+			
+		//	var valY=Math.round(skala[x1]*parseInt(dane2[6]));
+			//  O K   var valY=Math.round(parseInt(dane2[nr]));
+			var valY=parseFloat(dane2[nr]);//.toFixed(1);
+			if (valY==-127)valY='';
+			if (valY==85)valY='';
+		dps[x1].push({				
+	//	label:  (dane2[4]+" "+dane2[4]) ,
+		// x:index,
+			x : new Date ( dane2[2]),  //.slice(0,10))+" "+(dane2[4].slice(10,15)),
+			y : 	valY,
+			});
+			}
+			if (index< ile_pozycji-1)document.getElementById("timeToRender").innerHTML += "/ "+nr+"="+valY;
+		//	if ((index< 4))document.getElementById("timeToRender").innerHTML += (dane2[4].slice(10,16))+" @"+dane2[nr]+"/ "+nr+"="+valY+"<br/>";
+	}
+	// && (and x1>0))
+	return index < ile_pozycji;
+}
+//	alert("hoo"+jIle);
+//////////////////////////   Wykres
+var grubosc=4;
+var odstep=Math.round(ile_pozycji/30);
+//var odstep=Math.round(10);
+//alert("szerokosc"+odstep);
+///////////////////////////////////////
+	var chart = new CanvasJS.Chart("chartContainer", {
+		exportEnabled: true,
+		animationEnabled: true, 
+		animationDuration: 800,
+		zoomEnabled:true,
+		theme: "light2",
+	
+      toolTip:{
+        enabled: true,       //disable here
+        animationEnabled: true, //disable here
+		shared: true,
+      },
+		
+		title :{
+			fontSize:15,
+			text: "Odczyt temperatur °C",
+		},
+		legend: {
+			cursor: "pointer",
+			verticalAlign: "top",
+			horizontalAlign: "center",  
+			itemclick: function (e) {
+                //console.log("legend click: " + e.dataPointIndex);
+                //console.log(e);
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+		},
+		axisX: {
+			//interval: odstep,
+			gridThickness: 1,
+			valueFormatString:"MM-DD HH:mm",
+			intervalType: "minute",     
+			crosshair: {
+				enabled: true,
+				snapToDataPoint: true
+				}			
+			//valueFormatString: "# ", 
+		},		
+		axisY: {
+			suffix: "°C",
+		//	interval:5,
+		//	minimum: 15,
+		//	maximum: 65,
+			crosshair: {
+			enabled: true,
+			snapToDataPoint: true,	
+			}
+		},
+		data: [	{	
+			type: "line",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: true,
+			name: nazwa[0]  ,	
+			legendMarkerType: "square",
+			dataPoints: dps[0]
+		},
+		{	/// TEMP ZEW
+			type: "line",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: true,
+			legendMarkerType: "square",
+			name: nazwa[1]  ,
+			dataPoints: dps[1]
+		},
+		{	/// GRZEJNIKI
+			type: "spline",
+			markerSize: 0,
+			lineThickness:grubosc,
+			legendMarkerType: "square",
+			showInLegend: true,
+			name: nazwa[2]  ,	
+			dataPoints: dps[2]
+		},
+		{	///Podloga
+			type: "spline",
+			markerSize: 0,
+			lineThickness: grubosc,			
+			showInLegend: true,
+			name: nazwa[3]  ,	
+			dataPoints: dps[3]
+		},
+		{	// cwu
+			type: "spline",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: true,
+			name: nazwa[4]  ,	
+			visible: true,
+			dataPoints: dps[4]
+		},
+		{	// Pokój 1
+			type: "spline",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: false,
+			name: nazwa[5]  ,	
+			visible: false,
+			dataPoints: dps[5]
+		},
+		{	// POMPA CWU
+			type: "spline",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: false,
+			name: nazwa[6]  ,	
+			visible: false,
+			dataPoints: dps[6]
+		},
+		{	/// POMPA PODLOGOWA
+			type: "spline",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: false,
+			name: nazwa[7]  ,	
+			visible: false,
+			dataPoints: dps[7]
+		},
+		{	
+			type: "spline",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: false,
+			name: nazwa[8]  ,	
+			visible: false,
+			dataPoints: dps[8]
+		},
+		{	
+			type: "spline",
+			markerSize: 0,
+			lineThickness: grubosc,
+			showInLegend: false,
+			name: nazwa[9]  ,	
+			visible: false,
+			dataPoints: dps[9]
+		}
+		]
+		});
+		
+	//	alert("Wykres"+jIle);
+		chart.render();
+	}
+  
+////////////////////////////////
+	 </script>
+	</html> 			 
+	  
+  
+  
+  
+  
+  
+  
+  
+  
+  
